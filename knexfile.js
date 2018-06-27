@@ -1,16 +1,16 @@
-require('dotenv').config();
+const knex = require('./settings');
 
 module.exports = {
 
   development: {
     client: 'postgresql',
     connection: {
-      host     : process.env.DB_HOST,
-      user     : process.env.DB_USER,
-      password : process.env.DB_PASS,
-      database : process.env.DB_NAME,
-      port     : process.env.DB_PORT,
-      ssl      : process.env.DB_SSL
+      host     : knex.hostname,
+      user     : knex.user,
+      password : knex.password,
+      database : knex.database,
+      port     : knex.port,
+      ssl      : knex.ssl
     },
     migrations: {
       directory: './db/migrations',
