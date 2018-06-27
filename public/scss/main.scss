@@ -1,0 +1,108 @@
+$title-font: "Poppins", sans-serif;
+$body-font: "Open Sans", sans-serif;
+$navbar-color: #f7fbfc;
+$body-color: #d6e6f2;
+$form-color: #b9d7ea;
+$font-color: #355c7d;
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+/*
+ * Global layout stuff
+ */
+
+body {
+  margin: 0;
+  background-color: $navbar-color;
+  font: 100% $body-font;
+  font-weight: 400;
+  color: $font-color;
+}
+
+button {
+  background-color: $font-color !important;
+  color: $body-color;
+}
+
+/*
+ * Navbar
+ */
+
+#navbar {
+  height: 80px;
+  background-color: $navbar-color;
+  padding: 0 2em;
+  a {
+    color: $font-color;
+    font-family: $title-font;
+    font-weight: 500;
+    letter-spacing: 0.4px;
+  }
+  img {
+    width: 80px;
+    height: 80px;
+    margin-right: 3px;
+  }
+  i {
+    margin-right: 5px;
+  }
+}
+
+main {
+  margin-top: 80px;
+  #resto-bg {
+    height: 250px;
+    overflow: hidden;
+    img {
+      background-size: repeat;
+    }
+  }
+  #restaurant-name {
+    font-size: 30px;
+  }
+  #menu-category-container {
+    margin-bottom: 30px;
+  }
+  #menu-category {
+    a {
+      font-size: 14px;
+      font-family: $title-font;
+      font-weight: 300;
+      letter-spacing: 0.7px;
+      color: $font-color;
+    }
+  }
+  .list-group {
+    margin-bottom: 30px;
+    .menu-title {
+      h2 {
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: 0.7px;
+        padding-bottom: 13px;
+      }
+    }
+    .menu-item {
+      padding-top: 16px;
+    }
+    .item-name {
+      float: left;
+      font-size: 15px;
+      font-weight: 600;
+      p {
+        font-weight: 300;
+      }
+    }
+    .item-price {
+      float: right;
+    }
+  }
+}
