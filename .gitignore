@@ -5,3 +5,4 @@ public/styles
 *.sqlite3
 plan
 settings.json
+.DS_Store
