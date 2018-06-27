@@ -1,17 +1,280 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Home Page</title>
 
-    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
-    <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
-    <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+<head>
+  <!-- Meta Information -->
+  <title>We Eat</title>
 
-    <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-    <script type="text/javascript" src="/scripts/app.js"></script>
-  </head>
+  <!-- External CSS -->
+  <link rel="stylesheet" href="vendor/normalize-4.1.1.css" type="text/css" />
+  <link rel="stylesheet" href="vendor/webfonts/fontawesome-all.min.css" type="text/css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+    crossorigin="anonymous">
 
-  <body>
-    <h1>Hello World!</h1>
-  </body>
+  <!-- App CSS -->
+  <link rel="stylesheet" href="styles/main.css" type="text/css" />
+
+  <!-- External JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+
+  <!-- App JS -->
+  <script type="text/javascript" src="scripts/app.js"></script>
+
+  <!-- External Font -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins:300,500|Open+Sans:300,400,600" rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- Top nav bar (fixed) -->
+  <nav class="navbar fixed-top" id="navbar">
+    <a class="navbar-brand" href="#">
+      We Eat
+    </a>
+    <form class="form-inline my-2 my-lg-0">
+      <button class="btn my-2 my-sm-0" id="compose" type="submit">
+        <i class="fal fa-shopping-cart"></i>Checkout</button>
+    </form>
+  </nav>
+
+  <!-- Page-specific (main) content here -->
+  <main>
+    <div class="container-fluid">
+      <div class="row">
+        <div id="resto-bg">
+          <img src="images/resto-bg.png" class="img-fluid" alt="Restaurant background image">
+        </div>
+      </div>
+
+      <div class="container" id="menu-container">
+
+        <div class="row border-bottom">
+          <div class="col-4 py-3">
+            <h1 class="d-inline pr-3" id="restaurant-name">Sukiyaki</h1>
+            <div class="d-inline">
+              <i class="fal fa-dollar-sign fa-sm"></i>
+              <i class="fal fa-dollar-sign fa-sm"></i>
+            </div>
+          </div>
+        </div>
+
+        <div class="row border-bottom" id="menu-category-container">
+          <nav class="navbar navbar-expand-sm" id="menu-category">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="#coldapp">APPETIZERS</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#soups">SOUPS</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#teriyaki">TERIYAKI CLASSIC</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+
+        <div class="list-group" id="coldapp">
+          <div class="text-center menu-title">
+            <h2>- APPETIZERS -</h2>
+          </div>
+
+          <a href="#" class="list-group-flush list-group-item-action menu-item border-top">
+            <div class="item-name">
+              Mini Soup
+              <p>Your choice of protein and flavour.</p>
+            </div>
+            <div class="item-price pt-2">
+              $4.99
+              <i class="fal fa-plus-square fa-lg pl-2"></i>
+            </div>
+          </a>
+
+          <a href="#" class="list-group-flush list-group-item-action menu-item border-top">
+            <div class="item-name">
+              Vegetable Spring Roll
+              <p>1 piece</p>
+            </div>
+            <div class="item-price pt-2">
+              $1.69
+              <i class="fal fa-plus-square fa-lg pl-2"></i>
+            </div>
+          </a>
+
+          <a href="#" class="list-group-flush list-group-item-action menu-item border-top">
+            <div class="item-name">
+              Gyoza
+              <p>Chicken Dumplings. 3 pieces</p>
+            </div>
+            <div class="item-price pt-2">
+              $3.19
+              <i class="fal fa-plus-square fa-lg pl-2"></i>
+            </div>
+          </a>
+
+          <a href="#" class="list-group-flush list-group-item-action menu-item border-top">
+            <div class="item-name">
+              Tofu
+              <p>Your choice of fried or cold.</p>
+            </div>
+            <div class="item-price pt-2">
+              $1.99
+              <i class="fal fa-plus-square fa-lg pl-2"></i>
+            </div>
+          </a>
+        </div>
+
+        <div class="list-group" id="soups">
+          <div class="text-center menu-title">
+            <h2>- SOUPS -</h2>
+          </div>
+
+          <a href="#" class="list-group-flush list-group-item-action menu-item border-top">
+            <div class="item-name">
+              Chicken Ramen Soup
+              <p>With noodles, egg, and vegetables.</p>
+            </div>
+            <div class="item-price pt-2">
+              $9.99
+              <i class="fal fa-plus-square fa-lg pl-2"></i>
+            </div>
+          </a>
+
+          <a href="#" class="list-group-flush list-group-item-action menu-item border-top">
+            <div class="item-name">
+              Beef Ramen Soup
+              <p>With noodles, egg, and vegetables.</p>
+            </div>
+            <div class="item-price pt-2">
+              $10.49
+              <i class="fal fa-plus-square fa-lg pl-2"></i>
+            </div>
+          </a>
+
+          <a href="#" class="list-group-flush list-group-item-action menu-item border-top">
+            <div class="item-name">
+              Shrimp Ramen Soup
+              <p>With noodles, egg, and vegetables.</p>
+            </div>
+            <div class="item-price pt-2">
+              $11.49
+              <i class="fal fa-plus-square fa-lg pl-2"></i>
+            </div>
+          </a>
+
+          <a href="#" class="list-group-flush list-group-item-action menu-item border-top">
+            <div class="item-name">
+              Seafood Ramen Soup
+              <p>With noodles, egg, and vegetables.</p>
+            </div>
+            <div class="item-price pt-2">
+              $11.49
+              <i class="fal fa-plus-square fa-lg pl-2"></i>
+            </div>
+          </a>
+
+          <a href="#" class="list-group-flush list-group-item-action menu-item border-top">
+            <div class="item-name">
+              Vegetarian Ramen Soup
+              <p>With noodles, egg, and vegetables.</p>
+            </div>
+            <div class="item-price pt-2">
+              $9.99
+              <i class="fal fa-plus-square fa-lg pl-2"></i>
+            </div>
+          </a>
+        </div>
+
+        <div class="list-group" id="teriyaki">
+          <div class="text-center menu-title">
+            <h2>- TERIYAKI CLASSIC -</h2>
+          </div>
+
+          <a href="#" class="list-group-flush list-group-item-action menu-item border-top">
+            <div class="item-name">
+              Chicken Teriyaki
+              <p>With steamed rice and vegetables.</p>
+            </div>
+            <div class="item-price pt-2">
+              $9.99
+              <i class="fal fa-plus-square fa-lg pl-2"></i>
+            </div>
+          </a>
+
+          <a href="#" class="list-group-flush list-group-item-action menu-item border-top">
+            <div class="item-name">
+              Beef Teriyaki
+              <p>With steamed rice and vegetables.</p>
+            </div>
+            <div class="item-price pt-2">
+              $10.49
+              <i class="fal fa-plus-square fa-lg pl-2"></i>
+            </div>
+          </a>
+
+          <a href="#" class="list-group-flush list-group-item-action menu-item border-top">
+            <div class="item-name">
+              Shrimp Teriyaki
+              <p>With steamed rice and vegetables.</p>
+            </div>
+            <div class="item-price pt-2">
+              $10.99
+              <i class="fal fa-plus-square fa-lg pl-2"></i>
+            </div>
+          </a>
+
+          <a href="#" class="list-group-flush list-group-item-action menu-item border-top">
+            <div class="item-name">
+              Salmon Teriyaki
+              <p>With steamed rice and vegetables.</p>
+            </div>
+            <div class="item-price pt-2">
+              $9.49
+              <i class="fal fa-plus-square fa-lg pl-2"></i>
+            </div>
+          </a>
+
+          <a href="#" class="list-group-flush list-group-item-action menu-item border-top">
+            <div class="item-name">
+              Tofu Teriyaki
+              <p>With steamed rice and vegetables.</p>
+            </div>
+            <div class="item-price pt-2">
+              $9.49
+              <i class="fal fa-plus-square fa-lg pl-2"></i>
+            </div>
+          </a>
+
+          <a href="#" class="list-group-flush list-group-item-action menu-item border-top">
+            <div class="item-name">
+              Pineapple Chicken Teriyaki
+              <p>With steamed rice and vegetables.</p>
+            </div>
+            <div class="item-price pt-2">
+              $10.49
+              <i class="fal fa-plus-square fa-lg pl-2"></i>
+            </div>
+          </a>
+
+          <a href="#" class="list-group-flush list-group-item-action menu-item border-top">
+            <div class="item-name">
+              Vegetarian Teriyaki
+              <p>With steamed rice and vegetables.</p>
+            </div>
+            <div class="item-price pt-2">
+              $12.49
+              <i class="fal fa-plus-square fa-lg pl-2"></i>
+            </div>
+          </a>
+        </div>
+        </div>
+      </div>
+  </main>
+</body>
+
 </html>
