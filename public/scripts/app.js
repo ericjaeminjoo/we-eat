@@ -12,7 +12,7 @@ $(document).ready(function() {
   // Creates a DOM for a dish
   function createDish(dish) {
     return  `
-      <a href="#" class="list-group-flush list-group-item-action menu-item border-top" data-toggle="modal" data-target="#exampleModalCenter">
+      <a href="#" id="${dish.id}" class="food-item list-group-flush list-group-item-action menu-item border-top" data-toggle="modal" data-target="#exampleModalCenter">
         <div class="item-name">
           ${dish.name}
           <p>${dish.description}.</p>
@@ -25,61 +25,54 @@ $(document).ready(function() {
     `
   };
 
+  // Object for Food Category (/url and #id)
+  const foodCategoryObj = {
+    "/appetizers": "#coldapp",
+    "/soups": "#soups",
+    "/teriyaki": "#teriyaki"
+  };
+
   // Renders dishes into index.html
-  const renderAppetizers = (foodArr) => {
+  const renderFoodCategory = (foodArr, elementCategory) => {
     for(let foodItem of foodArr){
-      $('#coldapp')
+      $(elementCategory)
         .append(createDish(foodItem));
     }
   };
 
-  // Ajax query to get a list of soups
-  const loadAppetizers = () => {
+  // Ajax query to get a list of food category
+  const loadFoodCategory = (url, elementResult) => {
     $.ajax({
       method: "GET",
-      url: "/appetizers"
+      url: url
     }).then(results => {
-        renderAppetizers(results);
+      renderFoodCategory(results, elementResult);
     });
   };
 
-  // Renders dishes into index.html
-  const renderSoups = (foodArr) => {
+  // For In Loop to Print Out the Food Category to HTML
+  for(let foodCategoryEl in foodCategoryObj){
+    loadFoodCategory(foodCategoryEl, foodCategoryObj[foodCategoryEl]);
+  };
+
+  // Gets the dish object by its id when clicked
+  $('#menu-container').on('click', '.food-item', function (event) {
+    $.ajax({
+      method: "GET",
+      url: `/dish/${this.id}`
+    }).done(results => {
+      renderSingleDish(results);
+    }).catch(err => {
+      console.log(err);
+    })
+  });
+
+  // Renders a single dish into index.html
+  const renderSingleDish = (foodArr) => {
     for (let foodItem of foodArr) {
-      $('#soups')
+      $('#dish')
         .append(createDish(foodItem));
     }
   };
 
-  // Ajax query to get a list of soups
-  const loadSoups = () => {
-    $.ajax({
-      method: "GET",
-      url: "/soups"
-    }).then(results => {
-      renderSoups(results);
-    });
-  };
-
-  // Renders dishes into index.html
-  const renderTeriyaki = (foodArr) => {
-    for (let foodItem of foodArr) {
-      $('#teriyaki')
-        .append(createDish(foodItem));
-    }
-  };
-
-  // Ajax query to get a list of soups
-  const loadTeriyaki = () => {
-    $.ajax({
-      method: "GET",
-      url: "/teriyaki"
-    }).then(results => {
-      renderTeriyaki(results);
-    });
-  };
-
-  loadAppetizers();
-  loadSoups();
-  loadTeriyaki();
 });
