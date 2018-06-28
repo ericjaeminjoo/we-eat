@@ -68,6 +68,13 @@ main {
   #restaurant-name {
     font-size: 30px;
   }
+  .modal-footer {
+    display: flex;
+    justify-content: space-between;
+  }
+  #quantity-value {
+    width: 40px;
+  }
   #menu-category-container {
     margin-bottom: 30px;
   }

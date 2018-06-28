@@ -15,9 +15,6 @@ module.exports = knex => {
         console.log("Error: ", error);
         return Promise.resolve();
       })
-      .finally(() => {
-        knex.destroy();
-      });
   });
 
   router.get("/soups", (req, res) => {
@@ -31,9 +28,6 @@ module.exports = knex => {
         console.log("Error: ", error);
         return Promise.resolve();
       })
-      .finally(() => {
-        knex.destroy();
-      });
   });
 
   router.get("/teriyaki", (req, res) => {
@@ -47,9 +41,6 @@ module.exports = knex => {
         console.log("Error: ", error);
         return Promise.resolve();
       })
-      .finally(() => {
-        knex.destroy();
-      });
   });
 
   return router;

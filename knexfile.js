@@ -1,16 +1,16 @@
-const knex = require('./settings');
+const settings = require('./settings');
 
 module.exports = {
 
   development: {
     client: 'postgresql',
     connection: {
-      host     : knex.hostname,
-      user     : knex.user,
-      password : knex.password,
-      database : knex.database,
-      port     : knex.port,
-      ssl      : knex.ssl
+      host: settings.hostname,
+      user: settings.user,
+      password: settings.password,
+      database: settings.database,
+      port: settings.port,
+      ssl: settings.ssl
     },
     migrations: {
       directory: './db/migrations',
