@@ -15,7 +15,11 @@ module.exports = knex => {
       .catch(error => {
         console.log("Error: ", error);
         return Promise.resolve();
+<<<<<<< 45348a8fbea9e75d4590cdeb865115cdef5fbd16
       });
+=======
+      })
+>>>>>>> Added increase/decrease functionality to quantity value along with SCSS styling
   });
 
   // Gets the soups from db
@@ -29,7 +33,11 @@ module.exports = knex => {
       .catch(error => {
         console.log("Error: ", error);
         return Promise.resolve();
+<<<<<<< 45348a8fbea9e75d4590cdeb865115cdef5fbd16
       });
+=======
+      })
+>>>>>>> Added increase/decrease functionality to quantity value along with SCSS styling
   });
 
   // Gets the teriyaki from db
@@ -55,10 +63,13 @@ module.exports = knex => {
       .then(result => {
         res.json(result);
       })
+<<<<<<< 45348a8fbea9e75d4590cdeb865115cdef5fbd16
       .catch(error => {
         console.log("Error: ", error);
         return Promise.resolve();
       });
+=======
+>>>>>>> Added increase/decrease functionality to quantity value along with SCSS styling
   });
 
   return router;
