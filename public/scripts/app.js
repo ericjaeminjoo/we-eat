@@ -11,60 +11,75 @@
 $(document).ready(function() {
   // Creates a DOM for a dish
   function createDish(dish) {
-    let $article        = $('<article>');
-
-    let $image          = $('<img>')
-                            .attr('src', dish.image_url);
-
-    let $a              = $('<a>')
-                            .attr('href', '#')
-                            .addClass('list-group-flush list-group-item-action menu-item border-top')
-                            .data('toggle', 'modal')
-                            .data('target', '#exampleModalCenter');
-
-    let $desc_wrapper   = $('<div>')
-                            .addClass('item-name')
-                            .text(dish.name);
-    let $description    = $('<p>')
-                            .text(dish.description);
-
-    let $plus_wrapper   = $('<div>')
-                            .addClass('item-price pt-2')
-                            .text(dish.price);
-
-    let $plus           = $('<i>')
-                            .addClass('fal fa-plus-square fa-lg pl-2');
-
-    $plus_wrapper           .append($plus);
-    $desc_wrapper           .append($description);
-
-    $a                      .append($plus_wrapper)
-                            .append($desc_wrapper);
-
-    $article                .append($a);
-
-    return $article;
+    return  `
+      <a href="#" class="list-group-flush list-group-item-action menu-item border-top" data-toggle="modal" data-target="#exampleModalCenter">
+        <div class="item-name">
+          ${dish.name}
+          <p>${dish.description}.</p>
+        </div>
+        <div class="item-price pt-2">
+          ${dish.price}
+          <i class="fal fa-plus-square fa-lg pl-2"></i>
+        </div>
+      </a>
+    `
   };
 
   // Renders dishes into index.html
-  const renderFoodList = (foodArr) => {
-    for(let article of foodArr){
-      $('.soups')
-        .append(createDish(article));
+  const renderAppetizers = (foodArr) => {
+    for(let foodItem of foodArr){
+      $('#coldapp')
+        .append(createDish(foodItem));
     }
   };
 
+  // Ajax query to get a list of soups
+  const loadAppetizers = () => {
+    $.ajax({
+      method: "GET",
+      url: "/appetizers"
+    }).then(results => {
+        renderAppetizers(results);
+    });
+  };
+
+  // Renders dishes into index.html
+  const renderSoups = (foodArr) => {
+    for (let foodItem of foodArr) {
+      $('#soups')
+        .append(createDish(foodItem));
+    }
+  };
 
   // Ajax query to get a list of soups
-  const loadFoodList = () => {
+  const loadSoups = () => {
     $.ajax({
       method: "GET",
       url: "/soups"
     }).then(results => {
-        renderFoodList(results);
+      renderSoups(results);
     });
   };
 
-  loadFoodList();
+  // Renders dishes into index.html
+  const renderTeriyaki = (foodArr) => {
+    for (let foodItem of foodArr) {
+      $('#teriyaki')
+        .append(createDish(foodItem));
+    }
+  };
 
+  // Ajax query to get a list of soups
+  const loadTeriyaki = () => {
+    $.ajax({
+      method: "GET",
+      url: "/teriyaki"
+    }).then(results => {
+      renderTeriyaki(results);
+    });
+  };
+
+  loadAppetizers();
+  loadSoups();
+  loadTeriyaki();
 });
