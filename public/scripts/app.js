@@ -20,7 +20,7 @@ $(document).ready(function() {
           <p>${dish.description}.</p>
         </div>
         <div class="item-price pt-2">
-          ${dish.price}
+          $${dish.price}
           <i class="fa fa-plus-square fa-lg pl-2"></i>
         </div>
       </a>
