@@ -8,6 +8,7 @@
 //     }
 //   });;
 // });
+
 $(document).ready(function() {
   // Creates a DOM element for a dish
   function createDish(dish) {
@@ -132,6 +133,30 @@ $(document).ready(function() {
       console.log('clicked -');
       $("#quantity-value").data('value', quantity - 1);
       console.log($("#quantity-value").data('value'));
+  });
+
+  let cartArray = [];
+
+  const getCart = (cartArray) => {
+   console.log(`Cart contains:
+        `);
+    for(let item of cartArray){
+      console.log($(item).data('value'))
+    }
+    console.log(cartArray);
+  }
+
+  $(".modal-dialog").on('click', '#add-to-cart', function(event) {
+    const dish = $('#dish').data('origin');
+    $.ajax({
+      method: "GET",
+      url: `/dish/${dish}` //${this.id}
+    }).done(results => {
+      cartArray.push(results[0]);
+      getCart(cartArray);
+    }).catch(err => {
+      console.log(err);
+    })
   });
 
 });

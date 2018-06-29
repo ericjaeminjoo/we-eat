@@ -1,8 +1,6 @@
 node_modules/
 public/styles
-.env
 *.log
 *.sqlite3
 plan
-settings.json
 .DS_Store
