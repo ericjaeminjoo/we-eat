@@ -82,26 +82,7 @@
               </div>
               <div class="modal-body">
                 <div class="container-fluid border-bottom" id="cart-items">
-                  <!-- <div class="row d-flex justify-content-between">
-                    <div class="item-name">
-                      2 x Mini Soup
-                      <p>Your choice of protein and flavour.</p>
-                    </div>
-                    <div class="item-price pt-2">
-                      $4.99
-                      <i class="fa fa-plus-square fa-lg pl-2"></i>
-                    </div>
-                  </div>
-                  <div class="row d-flex justify-content-between">
-                    <div class="item-name">
-                      1 x Chicken Teriyaki
-                      <p>With steamed rice and vegetables.</p>
-                    </div>
-                    <div class="item-price pt-2">
-                      $4.99
-                      <i class="fa fa-plus-square fa-lg pl-2"></i>
-                    </div>
-                  </div> -->
+                  <!-- cart items are dynamically added here -->
                 </div>
 
                 <div class="container-fluid">
@@ -109,24 +90,24 @@
                     <div id="subtotal">
                       Subtotal
                     </div>
-                    <div>
-                      $9.98
+                    <div id="subtotal-amount">
+                      <!-- the subtotal is dynamically calculated based on the cart items -->
                     </div>
                   </div>
                   <div class="row d-flex justify-content-between pt-2">
-                    <div id="delivery-fee">
-                      Delivery fee
+                    <div id="service-fee">
+                      Service fee
                     </div>
-                    <div>
-                      $4.49
+                    <div id="service-fee-amount">
+                      $2.99
                     </div>
                   </div>
                   <div class="row d-flex justify-content-between pt-3">
                     <div id="total">
                       Total (Incl. Tax)
                     </div>
-                    <div>
-                      $14.47
+                    <div id="total-amount">
+                      <!-- the total is dynamically calculated based on the subtotal -->
                     </div>
                   </div>
                 </div>

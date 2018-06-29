@@ -124,4 +124,12 @@ main {
     font-weight: 400;
     font-size: 15px;
   }
+  #subtotal-amount:before,
+  #total-amount:before {
+    content: "$";
+  }
+  #service-fee,
+  #service-fee-amount {
+    color: rgba(53, 91, 125, 0.582);
+  }
 }

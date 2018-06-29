@@ -10,7 +10,7 @@
 // });
 
 $(document).ready(function() {
-  // Creates a DOM element for cart item
+  // Creates a DOM element for cart items
   function createCartItems(item) {
     return `
       <div class="row d-flex justify-content-between">
@@ -19,7 +19,7 @@ $(document).ready(function() {
           <p>${item.description}</p>
         </div>
         <div class="item-price pt-2">
-          ${item.price}
+          $${item.price}
           <i class="fa fa-plus-square fa-lg pl-2"></i>
         </div>
       </div>
@@ -115,10 +115,19 @@ $(document).ready(function() {
 
   // Renders menu items for cart modal into index.html
   const renderCartItems = cartArr => {
+    let subtotal = 0,
+      serviceFee = 2.99,
+      total = 0;
+
     cartArr.forEach(item => {
+      subtotal += parseFloat(item.price);
       $("#cart-items").append(createCartItems(item));
     });
-  }
+
+    total = (parseFloat(subtotal) * 1.15) + serviceFee;
+    $("#subtotal-amount").text(subtotal.toFixed(2));
+    $("#total-amount").text(total.toFixed(2));
+  };
 
   // Gets the dish object by its id when clicked
   $("#menu-container").on("click", ".food-item", function(event) {
