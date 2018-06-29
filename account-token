@@ -1,0 +1,2 @@
+var accountSid = 'AC7052a5c2235109743ef7b375ee5110c4'; // Your Account SID from www.twilio.com/console
+var authToken = '7e4230f32a51eba5f7865b62bf4d5a9e';   // Your Auth Token from www.twilio.com/console

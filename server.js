@@ -18,6 +18,22 @@ const knexLogger = require("knex-logger");
 // const usersRoutes = require("./routes/users");
 const dishRoutes = require("./routes/dish");
 
+
+// Send SMS from Server to a Phone Number using Twilio API
+var accountSid = ''; // Your Account SID from www.twilio.com/console
+var authToken = '';   // Your Auth Token from www.twilio.com/console
+
+var twilio = require('twilio');
+var client = new twilio(accountSid, authToken);
+
+client.messages.create({
+    body: 'Hello Buddy! Here is the link: www.we-eat.com From We-Eat!!',
+    to: '+15142689002',  // Text this number 15145125510
+    from: '+14387956461' // From a valid Twilio number
+})
+.then((message) => console.log(message.sid));
+
+
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
