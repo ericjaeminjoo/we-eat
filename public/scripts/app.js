@@ -14,10 +14,10 @@ $(document).ready(function() {
     return `
       <a href="#" id="${
         dish.id
-      }" class="food-item list-group-flush list-group-item-action menu-item border-top" data-toggle="modal" data-target="#exampleModalCenter">
+      }" class="food-item list-group-flush list-group-item-action menu-item border-top" data-toggle="modal" data-target="#menu-item-modal">
         <div class="item-name">
           ${dish.name}
-          <p>${dish.description}.</p>
+          <p>${dish.description}</p>
         </div>
         <div class="item-price pt-2">
           $${dish.price}
@@ -26,12 +26,13 @@ $(document).ready(function() {
       </a>
     `;
   }
+
   // Creates a DOM element for a single dish in modal
   function createDishModal(dish) {
     return `
       <div id="dish" class="modal-content" data-origin="${dish.id}">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">
+            <h5 class="modal-title">
               ${dish.name}
             </h5>
             <a class="close" data-dismiss="modal" aria-label="Close">
@@ -90,8 +91,8 @@ $(document).ready(function() {
   // Renders a single dish into index.html
   const renderSingleDishModal = foodArr => {
     for (let foodItem of foodArr) {
-      $(".modal-dialog").empty();
-      $(".modal-dialog").append(createDishModal(foodItem));
+      $("#menu-item-modal-container").empty();
+      $("#menu-item-modal-container").append(createDishModal(foodItem));
     }
   };
 
@@ -150,8 +151,8 @@ $(document).ready(function() {
   });
 
   //Smooth scrolling with links
-  $('a[href*=\\#]').on('click', function (event) {
+  $("a[href*=\\#]").on("click", function(event) {
     event.preventDefault();
-    $('html,body').animate({ scrollTop: $(this.hash).offset().top - 80 }, 700);
+    $("html,body").animate({ scrollTop: $(this.hash).offset().top - 80 }, 700);
   });
 });

@@ -36,10 +36,9 @@
     <a class="navbar-brand" href="#">
       We Eat
     </a>
-    <form class="form-inline my-2 my-lg-0">
-      <button class="btn my-2 my-sm-0" id="compose" type="submit">
-        <i class="fal fa-shopping-cart"></i>Checkout</button>
-    </form>
+    <button class="btn my-2 my-sm-0" data-toggle="modal" data-target="#checkout-modal">
+      <i class="fal fa-shopping-cart"></i>Cart
+    </button>
   </nav>
 
   <!-- Page-specific (main) content here -->
@@ -63,10 +62,78 @@
           </div>
         </div>
 
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered" role="document">
+        <!-- Food Item Modal -->
+        <div class="modal fade" id="menu-item-modal" tabindex="-1" role="dialog" aria-labelledby="menu-food-item" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" id="menu-item-modal-container" role="document">
             <!-- modal window populated dynamically with 'onClick' menu item attributes -->
+          </div>
+        </div>
+
+        <!-- Checkout Modal -->
+        <div class="modal fade" id="checkout-modal" tabindex="-1" role="dialog" aria-labelledby="checkout" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-lg" id="checkout-modal-container" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Your order Sukiyaki</h5>
+                <a class="close" data-dismiss="modal" aria-label="Close">
+                  <i class="fal fa-times-circle"></i>
+                </a>
+              </div>
+              <div class="modal-body">
+                <div class="container-fluid border-bottom">
+                  <div class="row d-flex justify-content-between">
+                    <div class="item-name">
+                      Mini Soup
+                      <p>Your choice of protein and flavour.</p>
+                    </div>
+                    <div class="item-price pt-2">
+                      $4.99
+                      <i class="fa fa-plus-square fa-lg pl-2"></i>
+                    </div>
+                  </div>
+                  <div class="row d-flex justify-content-between">
+                    <div class="item-name">
+                      Chicken Teriyaki
+                      <p>With steamed rice and vegetables.</p>
+                    </div>
+                    <div class="item-price pt-2">
+                      $4.99
+                      <i class="fa fa-plus-square fa-lg pl-2"></i>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="container-fluid">
+                  <div class="row d-flex justify-content-between pt-3">
+                    <div>
+                      Subtotal
+                    </div>
+                    <div>
+                      $9.98
+                    </div>
+                  </div>
+                  <div class="row d-flex justify-content-between pt-2">
+                    <div>
+                      Delivery fee
+                    </div>
+                    <div>
+                      $4.49
+                    </div>
+                  </div>
+                  <div class="row d-flex justify-content-between pt-3">
+                    <div>
+                      Total (Incl. Tax)
+                    </div>
+                    <div>
+                      $14.47
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer mx-auto">
+                <button type="button" class="btn btn-primary">Checkout</button>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -89,21 +156,21 @@
         <div class="list-group" id="coldapp">
           <div class="text-center menu-title">
             <h2>- APPETIZERS -</h2>
-              <!-- dynamically added menu items inputted here -->
+            <!-- dynamically added menu items inputted here -->
           </div>
         </div>
 
         <div class="list-group" id="soups">
           <div class="text-center menu-title">
             <h2>- SOUPS -</h2>
-              <!-- dynamically added menu items inputted here -->
+            <!-- dynamically added menu items inputted here -->
           </div>
         </div>
 
         <div class="list-group" id="teriyaki">
           <div class="text-center menu-title">
             <h2>- TERIYAKI CLASSIC -</h2>
-              <!-- dynamically added menu items inputted here -->
+            <!-- dynamically added menu items inputted here -->
           </div>
         </div>
 

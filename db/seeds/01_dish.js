@@ -54,21 +54,21 @@ exports.seed = function(knex, Promise) {
           },
           {
             name: 'Shrimp Ramen Soup',
-            description: 'With noodles, eggs and vegetables',
+            description: 'With noodles, eggs and vegetables.',
             price: faker.commerce.price(1.00, 15.00),
             image_url: faker.image.food(),
             category: 'soups'
           },
           {
             name: 'Seafood Ramen Soup',
-            description: 'With noodles, eggs and vegetables',
+            description: 'With noodles, eggs and vegetables.',
             price: faker.commerce.price(1.00, 15.00),
             image_url: faker.image.food(),
             category: 'soups'
           },
           {
             name: 'Vegetarian Ramen Soup',
-            description: 'With noodles, eggs and vegetables',
+            description: 'With noodles, eggs and vegetables.',
             price: faker.commerce.price(1.00, 15.00),
             image_url: faker.image.food(),
             category: 'soups'
