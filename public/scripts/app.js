@@ -16,11 +16,11 @@ $(document).ready(function() {
       <a href="#" id="${
         dish.id
       }" class="food-item list-group-flush list-group-item-action menu-item border-top d-flex justify-content-between" data-toggle="modal" data-target="#menu-item-modal">
-        <div class="menu-item-name">
+        <div class="item-name">
           ${dish.name}
           <p>${dish.description}</p>
         </div>
-        <div class="menu-item-price pt-2">
+        <div class="item-price pt-2">
           $${dish.price}
           <i class="fa fa-plus-square fa-lg pl-2"></i>
         </div>
