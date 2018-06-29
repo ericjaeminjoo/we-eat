@@ -8,6 +8,7 @@
 //     }
 //   });;
 // });
+
 $(document).ready(function() {
   // Creates a DOM element for a dish
   function createDish(dish) {
@@ -52,7 +53,7 @@ $(document).ready(function() {
                 <i class="fal fa-plus"></i>
               </button>
             </div>
-            <button type="button" class="btn btn-primary" id="add-to-cart">ADD TO CART
+            <button type="button" class="btn btn-primary" id="add-to-cart" data-dismiss="modal">ADD TO CART
             </button>
           </div>
         </div>
@@ -138,6 +139,43 @@ $(document).ready(function() {
       .siblings("input")
       .val(quantity);
     $("#quantity-value").data("value", quantity);
+  });
+
+  let cart = [];
+
+  // Gets each items in the cart
+  const getItemsInCart = (cartArray) => {
+    for(let item of cartArray){
+      return item;
+    }
+  }
+
+  // Verifies if an item exists in the cart
+  const verifyBeforeAddingToCart = (dishId, cartArray) => {
+    for(let item of cartArray){
+      if(item.id === dishId){
+        return false;
+      }else {
+        return true;
+      }
+    }
+  };
+
+  // Adds an item to the cart
+  $(".modal-dialog").on('click', '#add-to-cart', function(event) {
+    const dishId = $('#dish').data('origin');
+    $.ajax({
+      method: "GET",
+      url: `/dish/${dishId}`
+    }).done(results => {
+      if(cart.length === 0){
+          cart.push(results[0]);
+      }else if(verifyBeforeAddingToCart(dishId, cart)){
+        cart.push(results[0]);
+      }
+    }).catch(err => {
+      console.log(err);
+    })
   });
 
   // Enforces quantity value to be above 0 and sets the data value to the user input value
