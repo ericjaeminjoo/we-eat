@@ -3,7 +3,11 @@
   "user": "labber",
   "password": "labber",
   "database": "midterm",
+<<<<<<< HEAD
   "hostname": "localhost",
+=======
+  "hostname": "127.0.0.1",
+>>>>>>> master
   "port": 5432,
   "ssl": true
 }

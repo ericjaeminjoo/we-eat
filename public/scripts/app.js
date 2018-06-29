@@ -12,22 +12,24 @@
 $(document).ready(function() {
   // Creates a DOM element for a dish
   function createDish(dish) {
-    return  `
-      <a href="#" id="${dish.id}" class="food-item list-group-flush list-group-item-action menu-item border-top" data-toggle="modal" data-target="#exampleModalCenter">
+    return `
+      <a href="#" id="${
+        dish.id
+      }" class="food-item list-group-flush list-group-item-action menu-item border-top" data-toggle="modal" data-target="#exampleModalCenter">
         <div class="item-name">
           ${dish.name}
           <p>${dish.description}.</p>
         </div>
         <div class="item-price pt-2">
-          ${dish.price}
-          <i class="fal fa-plus-square fa-lg pl-2"></i>
+          $${dish.price}
+          <i class="fa fa-plus-square fa-lg pl-2"></i>
         </div>
       </a>
-    `
-  };
+    `;
+  }
   // Creates a DOM element for a single dish in modal
   function createDishModal(dish) {
-    return  `
+    return `
       <div id="dish" class="modal-content" data-origin="${dish.id}">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLongTitle">
@@ -45,7 +47,7 @@ $(document).ready(function() {
               <button id="decrease-quantity">
                 <i class="fal fa-minus"></i>
               </button>
-              <input type="text" id="quantity-value" data-value="1" class="text-center"></input>
+              <input type="text" id="quantity-value" value="1" data-value="1" class="text-center"></input>
               <button id="increase-quantity">
                 <i class="fal fa-plus"></i>
               </button>
@@ -54,8 +56,8 @@ $(document).ready(function() {
             </button>
           </div>
         </div>
-    `
-  };
+    `;
+  }
 
   // Object for Food Category (/url and #id)
   const foodCategoryObj = {
@@ -75,66 +77,70 @@ $(document).ready(function() {
   };
 
   // For In Loop to Print Out the Food Category to HTML
-  for(let foodCategoryEl in foodCategoryObj){
+  for (let foodCategoryEl in foodCategoryObj) {
     loadFoodCategory(foodCategoryEl, foodCategoryObj[foodCategoryEl]);
-  };
+  }
 
   // Renders dishes into index.html
   const renderFoodCategory = (foodArr, elementCategory) => {
-    for(let foodItem of foodArr){
-      $(elementCategory)
-        .append(createDish(foodItem));
+    for (let foodItem of foodArr) {
+      $(elementCategory).append(createDish(foodItem));
     }
   };
 
   // Renders a single dish into index.html
-  const renderSingleDishModal = (foodArr) => {
+  const renderSingleDishModal = foodArr => {
     for (let foodItem of foodArr) {
-      $('.modal-dialog')
-        .append(createDishModal(foodItem));
+      $(".modal-dialog").empty();
+      $(".modal-dialog").append(createDishModal(foodItem));
     }
   };
 
   // Gets the dish object by its id when clicked
-  $('#menu-container').on('click', '.food-item', function (event) {
+  $("#menu-container").on("click", ".food-item", function(event) {
     $.ajax({
       method: "GET",
       url: `/dish/${this.id}`
-    }).done(results => {
-      renderSingleDishModal(results);
-    }).catch(err => {
-      console.log(err);
     })
-  });
-
-  // Removes DOM element when modal closes
-  $('.modal-dialog').on('click', '.close', event => {
-    // $('.food-item').querySelector($('#dish').data('origin')).focus();
-    $('#dish').remove();
+      .done(results => {
+        renderSingleDishModal(results);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   });
 
   // Increases qty of single dish on modal
-  $(".modal-dialog").on('click', '#increase-quantity', function(event) {
-    let quantity = Number($("#quantity-value").data('value'));
-    if (quantity >= 2) {
+  $(".modal-dialog").on("click", "#increase-quantity", function(event) {
+    let quantity = Number($("#quantity-value").data("value"));
+    quantity++;
+
+    if (quantity >= 0) {
       $("#decrease-quantity").removeAttr("disabled");
     }
-      console.log('clicked +');
-      $("#quantity-value").data('value', quantity + 1);
-      console.log($("#quantity-value").data('value'));
+
+    $(this)
+      .siblings("input")
+      .val(quantity);
+    $("#quantity-value").data("value", quantity);
   });
 
   // Decreases qty of single dish on modal
-  $(".modal-dialog").on('click', '#decrease-quantity', function(event) {
-    let quantity = Number($("#quantity-value").data('value'));
+  $(".modal-dialog").on("click", "#decrease-quantity", function(event) {
+    let quantity = Number($("#quantity-value").data("value"));
+    quantity--;
+
     if (quantity <= 0) {
-      $("#decrease-quantity").attr("disabled");
+      $("#decrease-quantity").attr("disabled", "disabled");
     }
-      console.log('clicked -');
-      $("#quantity-value").data('value', quantity - 1);
-      console.log($("#quantity-value").data('value'));
+
+    $(this)
+      .siblings("input")
+      .val(quantity);
+    $("#quantity-value").data("value", quantity);
   });
 
+<<<<<<< HEAD
   let cartArray = [];
 
   const getCart = (cartArray) => {
@@ -159,4 +165,21 @@ $(document).ready(function() {
     })
   });
 
+=======
+  // Enforces quantity value to be above 0 and sets the data value to the user input value
+  $(".modal-dialog").on("change keyup", "#quantity-value", function(event) {
+    if ($("#quantity-value").data("value") < 0) {
+      $("#quantity-value").data("value", "0");
+      $(this).val(0);
+    } else {
+      $("#quantity-value").data("value", $(this).val());
+    }
+  });
+
+  //Smooth scrolling with links
+  $('a[href*=\\#]').on('click', function (event) {
+    event.preventDefault();
+    $('html,body').animate({ scrollTop: $(this.hash).offset().top - 80 }, 700);
+  });
+>>>>>>> master
 });
