@@ -10,6 +10,22 @@
 // });
 
 $(document).ready(function() {
+  // Creates a DOM element for cart item
+  function createCartItems(item) {
+    return `
+      <div class="row d-flex justify-content-between">
+        <div class="item-name">
+          ${item.name}
+          <p>${item.description}</p>
+        </div>
+        <div class="item-price pt-2">
+          ${item.price}
+          <i class="fa fa-plus-square fa-lg pl-2"></i>
+        </div>
+      </div>
+    `;
+  }
+
   // Creates a DOM element for a dish
   function createDish(dish) {
     return `
@@ -97,6 +113,13 @@ $(document).ready(function() {
     }
   };
 
+  // Renders menu items for cart modal into index.html
+  const renderCartItems = cartArr => {
+    cartArr.forEach(item => {
+      $("#cart-items").append(createCartItems(item));
+    });
+  }
+
   // Gets the dish object by its id when clicked
   $("#menu-container").on("click", ".food-item", function(event) {
     $.ajax({
@@ -141,41 +164,50 @@ $(document).ready(function() {
     $("#quantity-value").data("value", quantity);
   });
 
+  // Cart array to hold all menu items user wants
   let cart = [];
 
   // Gets each items in the cart
-  const getItemsInCart = (cartArray) => {
-    for(let item of cartArray){
+  const getItemsInCart = cartArray => {
+    for (let item of cartArray) {
       return item;
     }
-  }
+  };
 
   // Verifies if an item exists in the cart
   const verifyBeforeAddingToCart = (dishId, cartArray) => {
-    for(let item of cartArray){
-      if(item.id === dishId){
+    for (let item of cartArray) {
+      if (item.id === dishId) {
         return false;
-      }else {
+      } else {
         return true;
       }
     }
   };
 
   // Adds an item to the cart
-  $(".modal-dialog").on('click', '#add-to-cart', function(event) {
-    const dishId = $('#dish').data('origin');
+  $(".modal-dialog").on("click", "#add-to-cart", function(event) {
+    const dishId = $("#dish").data("origin");
     $.ajax({
       method: "GET",
       url: `/dish/${dishId}`
-    }).done(results => {
-      if(cart.length === 0){
-          cart.push(results[0]);
-      }else if(verifyBeforeAddingToCart(dishId, cart)){
-        cart.push(results[0]);
-      }
-    }).catch(err => {
-      console.log(err);
     })
+      .done(results => {
+        if (cart.length === 0) {
+          cart.push(results[0]);
+        } else if (verifyBeforeAddingToCart(dishId, cart)) {
+          cart.push(results[0]);
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  });
+
+  // On cart button click, render cart items dynamically
+  $("#cart-btn").click(() => {
+    $("#cart-items").empty();
+    renderCartItems(cart);
   });
 
   // Enforces quantity value to be above 0 and sets the data value to the user input value
