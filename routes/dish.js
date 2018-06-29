@@ -15,7 +15,11 @@ module.exports = knex => {
       .catch(error => {
         console.log("Error: ", error);
         return Promise.resolve();
+<<<<<<< HEAD
       });
+=======
+      })
+>>>>>>> 0532a97fd84a54fcfda1e5ca8952d723b781d23e
   });
 
   // Gets the soups from db
@@ -29,7 +33,11 @@ module.exports = knex => {
       .catch(error => {
         console.log("Error: ", error);
         return Promise.resolve();
+<<<<<<< HEAD
       });
+=======
+      })
+>>>>>>> 0532a97fd84a54fcfda1e5ca8952d723b781d23e
   });
 
   // Gets the teriyaki from db
@@ -55,10 +63,13 @@ module.exports = knex => {
       .then(result => {
         res.json(result);
       })
+<<<<<<< HEAD
       .catch(error => {
         console.log("Error: ", error);
         return Promise.resolve();
       });
+=======
+>>>>>>> 0532a97fd84a54fcfda1e5ca8952d723b781d23e
   });
 
   return router;

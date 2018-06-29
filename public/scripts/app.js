@@ -9,10 +9,35 @@
 //   });;
 // });
 $(document).ready(function() {
+<<<<<<< HEAD
   // Creates a DOM element for a dish
   function createDish(dish) {
     return  `
       <a href="#" id="${dish.id}" class="food-item list-group-flush list-group-item-action menu-item border-top" data-toggle="modal" data-target="#exampleModalCenter">
+=======
+  $("#decrease-quantity").click(function() {
+    let quantity = $("#quantity-value").val();
+    if ($("#quantity-value").val() <= 0) {
+      $("#decrease-quantity").attr("disabled", "disabled");
+    } else {
+      $("#quantity-value").attr("value", --quantity);
+    }
+  });
+
+  $("#increase-quantity").click(function () {
+    let quantity = $("#quantity-value").val();
+    console.log(quantity);
+    if ($("#quantity-value").val() >= 0) {
+      $("#decrease-quantity").removeAttr("disabled");
+    }
+    $("#quantity-value").attr("value", ++quantity);
+  });
+
+  // Creates a DOM for a dish
+  function createDish(dish) {
+    return  `
+      <a href="#" id=${dish.id} class="list-group-flush list-group-item-action menu-item border-top" data-toggle="modal" data-target="#exampleModalCenter">
+>>>>>>> 0532a97fd84a54fcfda1e5ca8952d723b781d23e
         <div class="item-name">
           ${dish.name}
           <p>${dish.description}.</p>
