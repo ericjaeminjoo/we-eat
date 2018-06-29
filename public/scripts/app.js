@@ -21,7 +21,7 @@ $(document).ready(function() {
         </div>
         <div class="item-price pt-2">
           ${dish.price}
-          <i class="fal fa-plus-square fa-lg pl-2"></i>
+          <i class="fa fa-plus-square fa-lg pl-2"></i>
         </div>
       </a>
     `;
