@@ -1,0 +1,9 @@
+{
+  "client": "postgresql",
+  "user": "labber",
+  "password": "labber",
+  "database": "midterm",
+  "hostname": "127.0.0.1",
+  "port": 5432,
+  "ssl": true
+}
