@@ -85,6 +85,14 @@ main {
       font-weight: 300;
       letter-spacing: 0.7px;
       color: $font-color;
+      border-bottom: 1px solid transparent;
+      transition: 0.2s;
+    }
+    a:hover {
+      border-bottom: 1px solid $font-color;
+    }
+    a:active {
+      border-bottom: 1px solid $font-color;
     }
   }
   .list-group {

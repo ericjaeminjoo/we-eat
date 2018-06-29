@@ -148,4 +148,10 @@ $(document).ready(function() {
       $("#quantity-value").data("value", $(this).val());
     }
   });
+
+  //Smooth scrolling with links
+  $('a[href*=\\#]').on('click', function (event) {
+    event.preventDefault();
+    $('html,body').animate({ scrollTop: $(this.hash).offset().top - 80 }, 700);
+  });
 });
