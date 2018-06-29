@@ -112,15 +112,11 @@ main {
       color: $font-color;
     }
     .item-name {
-      float: left;
       font-size: 15px;
       font-weight: 600;
       p {
         font-weight: 300;
       }
-    }
-    .item-price {
-      float: right;
     }
   }
 }

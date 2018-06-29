@@ -14,12 +14,12 @@ $(document).ready(function() {
     return `
       <a href="#" id="${
         dish.id
-      }" class="food-item list-group-flush list-group-item-action menu-item border-top" data-toggle="modal" data-target="#menu-item-modal">
-        <div class="item-name">
+      }" class="food-item list-group-flush list-group-item-action menu-item border-top d-flex justify-content-between" data-toggle="modal" data-target="#menu-item-modal">
+        <div class="menu-item-name">
           ${dish.name}
           <p>${dish.description}</p>
         </div>
-        <div class="item-price pt-2">
+        <div class="menu-item-price pt-2">
           $${dish.price}
           <i class="fa fa-plus-square fa-lg pl-2"></i>
         </div>
