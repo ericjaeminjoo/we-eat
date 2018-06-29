@@ -107,10 +107,12 @@ $(document).ready(function() {
   });
 
   // Removes DOM element when modal closes
-  $('.modal-dialog').on('click', '.close', event => {
-    // $('.food-item').querySelector($('#dish').data('origin')).focus();
-    $('#dish').remove();
-  });
+  if ($(".modal-dialog")[0]) {
+    $(document).click((() => {
+      $("#dish").remove();
+    }))
+  }
+
 
   // Increases qty of single dish on modal
   $(".modal-dialog").on('click', '#increase-quantity', function(event) {
