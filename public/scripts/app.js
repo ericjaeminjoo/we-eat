@@ -52,7 +52,7 @@ $(document).ready(function() {
                 <i class="fal fa-plus"></i>
               </button>
             </div>
-            <button type="button" class="btn btn-primary" id="add-to-cart">ADD TO CART
+            <button type="button" class="btn btn-primary" id="add-to-cart" data-dismiss="modal">ADD TO CART
             </button>
           </div>
         </div>
@@ -140,32 +140,43 @@ $(document).ready(function() {
     $("#quantity-value").data("value", quantity);
   });
 
-<<<<<<< HEAD
-  let cartArray = [];
+  let cart = [];
 
-  const getCart = (cartArray) => {
-   console.log(`Cart contains:
-        `);
+  // Gets each items in the cart
+  const getItemsInCart = (cartArray) => {
     for(let item of cartArray){
-      console.log($(item).data('value'))
+      return item;
     }
-    console.log(cartArray);
   }
 
+  // Verifies if an item exists in the cart
+  const verifyBeforeAddingToCart = (dishId, cartArray) => {
+    for(let item of cartArray){
+      if(item.id === dishId){
+        return false;
+      }else {
+        return true;
+      }
+    }
+  };
+
+  // Adds an item to the cart
   $(".modal-dialog").on('click', '#add-to-cart', function(event) {
-    const dish = $('#dish').data('origin');
+    const dishId = $('#dish').data('origin');
     $.ajax({
       method: "GET",
-      url: `/dish/${dish}` //${this.id}
+      url: `/dish/${dishId}`
     }).done(results => {
-      cartArray.push(results[0]);
-      getCart(cartArray);
+      if(cart.length === 0){
+          cart.push(results[0]);
+      }else if(verifyBeforeAddingToCart(dishId, cart)){
+        cart.push(results[0]);
+      }
     }).catch(err => {
       console.log(err);
     })
   });
 
-=======
   // Enforces quantity value to be above 0 and sets the data value to the user input value
   $(".modal-dialog").on("change keyup", "#quantity-value", function(event) {
     if ($("#quantity-value").data("value") < 0) {
@@ -181,5 +192,4 @@ $(document).ready(function() {
     event.preventDefault();
     $('html,body').animate({ scrollTop: $(this.hash).offset().top - 80 }, 700);
   });
->>>>>>> master
 });
