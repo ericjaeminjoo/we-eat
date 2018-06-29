@@ -4,6 +4,7 @@ const express = require("express");
 const router = express.Router();
 
 module.exports = knex => {
+
   // Gets the appetizers from db
   router.get("/appetizers", (req, res) => {
     knex("dish")
@@ -46,7 +47,7 @@ module.exports = knex => {
       });
   });
 
-  // Gets the teriyaki from db
+  // Gets a specific dish item from db
   router.get("/dish/:id", (req, res) => {
     const dish_id = req.params.id;
     knex("dish")
@@ -60,6 +61,23 @@ module.exports = knex => {
         return Promise.resolve();
       });
   });
+
+
+  // Gets the order from db
+  router.get("/order", (req, res) => {
+    const dish_order_id = req.params.id;
+    knex("dish_order")
+      .select("qty", "special_inst", "dish_id", "order_id", )
+      .where({id: dish_order_id})
+      .then(result => {
+        res.json(result);
+      })
+      .catch(error => {
+        console.log("Error: ", error);
+        return Promise.resolve();
+      });
+  });
+
 
   return router;
 };
