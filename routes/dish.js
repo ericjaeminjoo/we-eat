@@ -103,11 +103,14 @@ module.exports = knex => {
   router.post("/order", (req, res) => {
 
     knex('order')
-      .insert([{id: req.body.id, phone: req.body.phone, time_stamp: req.body.time_stamp, time_pickup: req.body.time_pickup}])
+      .insert([{phone: req.body.phone, time_stamp: knex.fn.now(), time_pickup: req.body.time_pickup}])
       .select('*')
       .catch(error => {
         console.log("Error: ", error);
         return Promise.resolve();
+      })
+      .then(result.id => {
+        knex('dish_order').insert({})
       })
       // .finally(() => {
       //   knex.destroy();

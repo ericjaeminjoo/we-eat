@@ -262,4 +262,26 @@ $(document).ready(function() {
     event.preventDefault();
     $("html,body").animate({ scrollTop: $(this.hash).offset().top - 80 }, 700);
   });
+
+
+  //Checkout the order
+  $(".modal-footer mx-auto").on("click", "#checkout-btn", function(event) {
+    // const dishId = $("#dish").data("origin");
+    $.ajax({
+      method: "POST",
+      url: `/order`,
+      body: ,
+      // url: `/order/${dishId}`
+    })
+      .done(results => {
+
+        }
+        cart.push(obj);
+        console.log('Cart: ', cart);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  });
+
 });
