@@ -163,6 +163,9 @@ $(document).ready(function() {
         .parent()
         .remove();
     });
+
+    // Removes 'empty cart' alert on modal
+    $(".alert-danger").remove();
   };
 
   // Places the order from the cart
@@ -184,6 +187,7 @@ $(document).ready(function() {
     //   .catch(err => {
     //     console.log(err);
     //   });
+<<<<<<< HEAD
     console.log("Cart: ", cart);
     obj = {
       cart: cart,
@@ -210,6 +214,52 @@ $(document).ready(function() {
         })
       };
 
+=======
+
+    if ($(".phone-number").val() == "") {
+      $(".phone-number").addClass("is-invalid");
+      $(".invalid-feedback").empty();
+      $(".phone-number-container").append(() => {
+        return `
+        <div class="invalid-feedback">
+          A telephone number is required, please enter your telephone number.
+        </div>
+        `
+      });
+    }
+    if (cart.length === 0) {
+      $(".alert-danger").remove();
+      $(".modal-footer").prepend(() => {
+        return `
+        <div class="alert alert-danger" role="alert">
+          Cannot process empty order, please add items to your cart.
+        </div>
+        `
+      });
+    }
+    else {
+      $(".phone-number").removeClass("is-invalid");
+      $(".invalid-feedback").remove();
+      console.log("Cart: ", cart);
+      obj = {
+        cart: cart,
+        subTotal: $("#subtotal-amount").html(),
+        serviceFee: 2.99,
+        total: $("#total-amount").html(),
+        telephone: $(".phone-number").val()
+      };
+      order.push(obj);
+      //`}
+      console.log(obj);
+
+      // After menu items have been ordered, everything is reset
+      cart = [];
+      order = [];
+      obj = {};
+      $(".phone-number").val("");
+      $('#checkout-modal').modal('hide');
+    }
+>>>>>>> master
   });
 
   // Gets the dish object by its id when clicked

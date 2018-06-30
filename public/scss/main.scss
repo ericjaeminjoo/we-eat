@@ -132,4 +132,11 @@ main {
   #service-fee-amount {
     color: rgba(53, 91, 125, 0.582);
   }
+  .phone-number-container,
+  .phone-number::-webkit-input-placeholder {
+    font-size: 14px !important;
+  }
+  .alert {
+    font-size: 13px;   
+  }
 }
