@@ -111,12 +111,25 @@ main {
     .fa-plus-square {
       color: $font-color;
     }
-    .item-name {
-      font-size: 15px;
-      font-weight: 600;
-      p {
-        font-weight: 300;
-      }
+  }
+  .item-name,
+  #total {
+    font-size: 15px;
+    font-weight: 600;
+    p {
+      font-weight: 300;
     }
+  }
+  .item-price {
+    font-weight: 400;
+    font-size: 15px;
+  }
+  #subtotal-amount:before,
+  #total-amount:before {
+    content: "$";
+  }
+  #service-fee,
+  #service-fee-amount {
+    color: rgba(53, 91, 125, 0.582);
   }
 }
