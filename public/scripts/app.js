@@ -197,6 +197,19 @@ $(document).ready(function() {
     cart = [];
     order = [];
     obj = {};
+
+    for(let orderElement of order) {  // passing the object Order as an event
+      $.ajax({
+        method: "POST",
+        url: `/order`,
+        data: $(this).serialize() // cart items from the client selection
+        // url: `/order/${dishId}`
+      })
+        .done(results => {
+        console.log(`data----: ${data}`)
+        })
+      };
+
   });
 
   // Gets the dish object by its id when clicked
