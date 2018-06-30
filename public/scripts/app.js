@@ -131,7 +131,11 @@ $(document).ready(function() {
       $("#cart-items").append(createCartItems(item));
     });
 
-    total = subTotal * 1.15 + serviceFee;
+    if (cartArr.length === 0) {
+      total = 0;
+    } else {
+      total = subTotal * 1.15 + serviceFee;
+    }
 
     $("#subtotal-amount").text(subTotal.toFixed(2));
     $("#total-amount").text(total.toFixed(2));
@@ -145,7 +149,11 @@ $(document).ready(function() {
         if (item.id == removedItemID) {
           cart.splice(cart.indexOf(item), 1);
           subTotal -= item.lineTotal;
-          total = subTotal * 1.15 + serviceFee;
+          if (cart.length === 0) {
+            total = 0;
+          } else {
+            total = subTotal * 1.15 + serviceFee;
+          }
           $("#subtotal-amount").text(subTotal.toFixed(2));
           $("#total-amount").text(total.toFixed(2));
         }
@@ -176,7 +184,7 @@ $(document).ready(function() {
     //   .catch(err => {
     //     console.log(err);
     //   });
-    console.log('Cart: ', cart);
+    console.log("Cart: ", cart);
     obj = {
       cart: cart,
       subTotal: $("#subtotal-amount").html(),
