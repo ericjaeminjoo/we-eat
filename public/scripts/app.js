@@ -196,8 +196,12 @@ $(document).ready(function() {
         <div class="invalid-feedback">
           A telephone number is required, please enter your telephone number.
         </div>
-        `
+        `;
       });
+    }
+    if (!($(".phone-number").val() == "")) {
+      $(".phone-number").removeClass("is-invalid");
+      $(".invalid-feedback").remove();
     }
     if (cart.length === 0) {
       $(".alert-danger").remove();
@@ -206,10 +210,9 @@ $(document).ready(function() {
         <div class="alert alert-danger" role="alert">
           Cannot process empty order, please add items to your cart.
         </div>
-        `
+        `;
       });
-    }
-    else {
+    } else if (cart.length !== 0 && !($(".phone-number").val() == "")) {
       $(".phone-number").removeClass("is-invalid");
       $(".invalid-feedback").remove();
       console.log("Cart: ", cart);
@@ -229,7 +232,7 @@ $(document).ready(function() {
       order = [];
       obj = {};
       $(".phone-number").val("");
-      $('#checkout-modal').modal('hide');
+      $("#checkout-modal").modal("hide");
     }
   });
 
