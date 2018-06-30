@@ -245,6 +245,8 @@ $(document).ready(function() {
       order = [];
       obj = {};
       $(".phone-number").val("");
+      $("#cart-btn").empty();
+      $("#cart-btn").append(`<i class="fal fa-shopping-cart"></i> Cart`);
       $("#checkout-modal").modal("hide");
     }
   });
