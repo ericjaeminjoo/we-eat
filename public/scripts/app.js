@@ -13,14 +13,15 @@ $(document).ready(function() {
   // Creates a DOM element for cart items
   function createCartItems(item) {
     return `
-      <div class="row d-flex justify-content-between">
+      <div class="row d-flex justify-content-between" id="${item.id}">
         <div class="item-name">
+          ${item.qty} x
           ${item.name}
           <p>${item.description}</p>
         </div>
         <div class="item-price pt-2">
           $${item.lineTotal}
-          <i class="fa fa-plus-square fa-lg pl-2"></i>
+          <button class="fal fa-times fa-lg pl-2 remove-item-btn"></button>
         </div>
       </div>
     `;
@@ -122,42 +123,69 @@ $(document).ready(function() {
   // Renders menu items for cart modal into index.html
   const renderCartItems = cartArr => {
     let subTotal = 0,
-        serviceFee = 2.99,
-        total = 0;
+      serviceFee = 2.99,
+      total = 0;
     let obj = {};
+
     cartArr.forEach(item => {
       subTotal += parseFloat(item.lineTotal);
       $("#cart-items").append(createCartItems(item));
     });
-    total = (subTotal * 1.15) + serviceFee;
+
+    total = subTotal * 1.15 + serviceFee;
+
     $("#subtotal-amount").text(subTotal.toFixed(2));
     $("#total-amount").text(total.toFixed(2));
 
-    // Places the order from the cart
-    $(".modal-footer").on("click", "#checkout-btn", function(event) {
-      // $.ajax({
-      //   method: "GET",
-      //   url: `/order`
-      // })
-      //   .done(results => {
-      //     const lineTotal = $("#quantity-value").data("value") * parseFloat(results[0].price);
-      //     obj = {
-      //       cart: cart,
-      //       subTotal: subTotal.toFixed(2),
-      //       total: total.toFixed(2)
-      //     }
-      //     order.push(obj)
-      //     console.log(order)
-      //   })
-      //   .catch(err => {
-      //     console.log(err);
-      //   });
-      obj = { cart: cart, subTotal: subTotal.toFixed(2), serviceFee: 2.99, total: total.toFixed(2) };
-      order.push(obj);
-      // `}
-      console.log("Order: ", order);
+    $(".remove-item-btn").click(function() {
+      const removedItemID = $(this)
+        .parent()
+        .parent()
+        .attr("id");
+      cart.forEach(item => {
+        if (item.id == removedItemID) {
+          cart.splice(cart.indexOf(item), 1);
+          subTotal -= item.lineTotal;
+          total = subTotal * 1.15 + serviceFee;
+          $("#subtotal-amount").text(subTotal.toFixed(2));
+          $("#total-amount").text(total.toFixed(2));
+        }
+      });
+      $(this)
+        .parent()
+        .parent()
+        .remove();
     });
   };
+
+  // Places the order from the cart
+  $(".modal-footer").on("click", "#checkout-btn", function(event) {
+    // $.ajax({
+    //   method: "GET",
+    //   url: `/order`
+    // })
+    //   .done(results => {
+    //     const lineTotal = $("#quantity-value").data("value") * parseFloat(results[0].price);
+    //     obj = {
+    //       cart: cart,
+    //       subTotal: subTotal.toFixed(2),
+    //       total: total.toFixed(2)
+    //     }
+    //     order.push(obj)
+    //     console.log(order)
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   });
+    console.log(cart);
+    // obj = { cart: cart, subTotal: subTotal.toFixed(2), serviceFee: 2.99, total: total.toFixed(2) };
+    // order.push(obj);
+    // //`}
+    // console.log("Order: ", order);
+    // cart = [];
+    // order = [];
+    // obj = {};
+  });
 
   // Gets the dish object by its id when clicked
   $("#menu-container").on("click", ".food-item", function(event) {
@@ -222,7 +250,8 @@ $(document).ready(function() {
       url: `/dish/${dishId}`
     })
       .done(results => {
-        const lineTotal = $("#quantity-value").data("value") * parseFloat(results[0].price);
+        const lineTotal =
+          $("#quantity-value").data("value") * parseFloat(results[0].price);
         const obj = {
           id: results[0].id,
           name: results[0].name,
@@ -231,9 +260,9 @@ $(document).ready(function() {
           image_url: results[0].image_url,
           qty: $("#quantity-value").data("value"),
           lineTotal: lineTotal.toFixed(2)
-        }
+        };
         cart.push(obj);
-        console.log('Cart: ', cart);
+        console.log("Cart: ", cart);
       })
       .catch(err => {
         console.log(err);
