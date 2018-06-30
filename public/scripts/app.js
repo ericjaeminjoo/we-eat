@@ -125,7 +125,6 @@ $(document).ready(function() {
     let subTotal = 0,
       serviceFee = 2.99,
       total = 0;
-    let obj = {};
 
     cartArr.forEach(item => {
       subTotal += parseFloat(item.lineTotal);
@@ -177,14 +176,16 @@ $(document).ready(function() {
     //   .catch(err => {
     //     console.log(err);
     //   });
-    console.log(cart);
-    // obj = { cart: cart, subTotal: subTotal.toFixed(2), serviceFee: 2.99, total: total.toFixed(2) };
-    // order.push(obj);
-    // //`}
-    // console.log("Order: ", order);
-    // cart = [];
-    // order = [];
-    // obj = {};
+    console.log('Cart: ', cart);
+    obj = {
+      cart: cart,
+      subTotal: $("#subtotal-amount").attr('textContent'),
+      serviceFee: 2.99,
+      total: $("#total-amount").val()
+    };
+    order.push(obj);
+    //`}
+    console.log("Order: ", order);
   });
 
   // Gets the dish object by its id when clicked
