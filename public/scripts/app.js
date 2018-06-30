@@ -163,6 +163,9 @@ $(document).ready(function() {
         .parent()
         .remove();
     });
+
+    // Removes 'empty cart' alert on modal
+    $(".alert-danger").remove();
   };
 
   // Places the order from the cart
@@ -187,6 +190,7 @@ $(document).ready(function() {
 
     if ($(".phone-number").val() == "") {
       $(".phone-number").addClass("is-invalid");
+      $(".invalid-feedback").empty();
       $(".phone-number-container").append(() => {
         return `
         <div class="invalid-feedback">
@@ -194,7 +198,17 @@ $(document).ready(function() {
         </div>
         `
       });
-    } 
+    }
+    if (cart.length === 0) {
+      $(".alert-danger").remove();
+      $(".modal-footer").prepend(() => {
+        return `
+        <div class="alert alert-danger" role="alert">
+          Cannot process empty order, please add items to your cart.
+        </div>
+        `
+      });
+    }
     else {
       $(".phone-number").removeClass("is-invalid");
       $(".invalid-feedback").remove();
@@ -203,8 +217,8 @@ $(document).ready(function() {
         cart: cart,
         subTotal: $("#subtotal-amount").html(),
         serviceFee: 2.99,
-        total: $("#total-amount").html()
-        // phonenumber here
+        total: $("#total-amount").html(),
+        telephone: $(".phone-number").val()
       };
       order.push(obj);
       //`}
