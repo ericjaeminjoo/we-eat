@@ -109,9 +109,9 @@ module.exports = knex => {
         console.log("Error: ", error);
         return Promise.resolve();
       })
-      .then(result.id => {
-        knex('dish_order').insert({})
-      })
+      // .then(result.id => {
+      //   knex('dish_order').insert({})
+      // })
       // .finally(() => {
       //   knex.destroy();
       // })

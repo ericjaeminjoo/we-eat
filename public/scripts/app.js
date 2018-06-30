@@ -294,23 +294,23 @@ $(document).ready(function() {
 
 
   //Checkout the order
-  $(".modal-footer mx-auto").on("click", "#checkout-btn", function(event) {
-    // const dishId = $("#dish").data("origin");
-    $.ajax({
-      method: "POST",
-      url: `/order`,
-      body: ,
-      // url: `/order/${dishId}`
-    })
-      .done(results => {
+  // $(".modal-footer mx-auto").on("click", "#checkout-btn", function(event) {
+  //   // const dishId = $("#dish").data("origin");
+  //   $.ajax({
+  //     method: "POST",
+  //     url: `/order`,
+  //     body: ,
+  //     // url: `/order/${dishId}`
+  //   })
+  //     .done(results => {
 
-        }
-        cart.push(obj);
-        console.log('Cart: ', cart);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  });
+  //       }
+  //       cart.push(obj);
+  //       console.log('Cart: ', cart);
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     });
+  // });
 
 });
