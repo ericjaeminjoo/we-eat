@@ -19,7 +19,6 @@ $(document).ready(function() {
           <p>${item.description}</p>
         </div>
         <div class="item-price pt-2">
-          $${item.price}
           <i class="fa fa-plus-square fa-lg pl-2"></i>
         </div>
       </div>
@@ -115,18 +114,29 @@ $(document).ready(function() {
 
   // Renders menu items for cart modal into index.html
   const renderCartItems = cartArr => {
-    let subtotal = 0,
-      serviceFee = 2.99,
-      total = 0;
+    let lineTotal,
+        subtotal = 0,
+        serviceFee = 2.99,
+        total = 0;
 
     cartArr.forEach(item => {
-      subtotal += parseFloat(item.price);
-      $("#cart-items").append(createCartItems(item));
+      const obj = {
+        id: item.id,
+        name: item.name,
+        description: item.description,
+        price: item.price,
+        image_url: item.image_url,
+        qty: $("#quantity-value").data("value"),
+      }
+      console.log(obj);
+      lineTotal = parseFloat((obj.qty * obj.price));//parseFloat(item.price);
+      subtotal += lineTotal;//parseFloat(item.price);
+      $("#cart-items").append(createCartItems(obj));
     });
-
     total = (parseFloat(subtotal) * 1.15) + serviceFee;
     $("#subtotal-amount").text(subtotal.toFixed(2));
     $("#total-amount").text(total.toFixed(2));
+    $(".item-price").text(`$${lineTotal.toFixed(2)}`);
   };
 
   // Gets the dish object by its id when clicked
@@ -176,8 +186,8 @@ $(document).ready(function() {
   // Cart array to hold all menu items user wants
   let cart = [];
 
-  // Gets each items in the cart
-  const getItemsInCart = cartArray => {
+  // Gets each items from the cart
+  const getItemsFromCart = cartArray => {
     for (let item of cartArray) {
       return item;
     }
@@ -202,11 +212,12 @@ $(document).ready(function() {
       url: `/dish/${dishId}`
     })
       .done(results => {
-        if (cart.length === 0) {
-          cart.push(results[0]);
-        } else if (verifyBeforeAddingToCart(dishId, cart)) {
-          cart.push(results[0]);
-        }
+        cart.push(results[0]);
+        // if (cart.length === 0) {
+        //   cart.push(results[0]);
+        // } else if (verifyBeforeAddingToCart(dishId, cart)) {
+        //   cart.push(results[0]);
+        // }
       })
       .catch(err => {
         console.log(err);
