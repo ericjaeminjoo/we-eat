@@ -21,7 +21,7 @@ $(document).ready(function() {
         </div>
         <div class="item-price pt-2">
           $${item.lineTotal}
-          <button class="fal fa-times fa-lg pl-2 remove-item-btn"></button>
+          <button class="pl-2 remove-item-btn"><i class="fal fa-times"></i></button>
         </div>
       </div>
     `;
@@ -320,7 +320,7 @@ $(document).ready(function() {
           description: results[0].description,
           price: results[0].price,
           image_url: results[0].image_url,
-          qty: $("#quantity-value").data("value"),
+          qty: parseInt($("#quantity-value").data("value")),
           lineTotal: lineTotal.toFixed(2)
         };
         cart.push(obj);
