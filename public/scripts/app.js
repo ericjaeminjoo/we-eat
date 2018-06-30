@@ -184,19 +184,39 @@ $(document).ready(function() {
     //   .catch(err => {
     //     console.log(err);
     //   });
-    console.log("Cart: ", cart);
-    obj = {
-      cart: cart,
-      subTotal: $("#subtotal-amount").html(),
-      serviceFee: 2.99,
-      total: $("#total-amount").html()
-    };
-    order.push(obj);
-    //`}
-    console.log(obj);
-    cart = [];
-    order = [];
-    obj = {};
+
+    if ($(".phone-number").val() == "") {
+      $(".phone-number").addClass("is-invalid");
+      $(".phone-number-container").append(() => {
+        return `
+        <div class="invalid-feedback">
+          A telephone number is required, please enter your telephone number.
+        </div>
+        `
+      });
+    } 
+    else {
+      $(".phone-number").removeClass("is-invalid");
+      $(".invalid-feedback").remove();
+      console.log("Cart: ", cart);
+      obj = {
+        cart: cart,
+        subTotal: $("#subtotal-amount").html(),
+        serviceFee: 2.99,
+        total: $("#total-amount").html()
+        // phonenumber here
+      };
+      order.push(obj);
+      //`}
+      console.log(obj);
+
+      // After menu items have been ordered, everything is reset
+      cart = [];
+      order = [];
+      obj = {};
+      $(".phone-number").val("");
+      $('#checkout-modal').modal('hide');
+    }
   });
 
   // Gets the dish object by its id when clicked
