@@ -61,5 +61,76 @@ module.exports = knex => {
       });
   });
 
+// Gets the order from db
+// router.get("/order", (req, res) => {
+//   // const dish_order_id = req.params.id;
+//   knex("dish_order")
+//     .select("qty", "special_inst", "dish_id", "order_id")
+//     .where({ dish_order })
+//     .then(result => {
+//       res.json(result);
+//     })
+//     .catch(error => {
+//       console.log("Error: ", error);
+//       return Promise.resolve();
+//     });
+// });
+
+
+// Post the final cart for checkout
+// router.post("/dish_order", (req, res) => {
+
+//   const cartObj = req.body.cart;
+
+//   for (let cartElement of cartObj) {
+//     knex('dish_order')
+//       .insert([{id: cartElement.id, name: cartElement.name, description: cartElement.description, price: cartElement.price, qty: cartElement.qty}])
+//       .select('*')
+//       .catch(error => {
+//         console.log("Error: ", error);
+//         return Promise.resolve();
+//       })
+//       // .finally(() => {
+//       //   knex.destroy();
+//       // })
+//   }
+// });
+
+
+// Post the final checkout
+// router.post("/order", (req, res) => {
+
+//   knex('order')
+//     .insert([{phone: req.body.phone, time_stamp: knex.fn.now(), time_pickup: req.body.time_pickup}])
+//     .select('*')
+//     .catch(error => {
+//       console.log("Error: ", error);
+//       return Promise.resolve();
+//     })
+//     // .then(result.id => {
+//     //   knex('dish_order').insert({})
+//     // })
+//     // .finally(() => {
+//     //   knex.destroy();
+//     // })
+// }); 
+
+// Puts the cart in the db
+router.post("/order", (req, res) => {
+  knex("order")
+    .insert({ service_fee: JSON.stringify(serviceFee),
+              sub_total: JSON.stringify(subTotal),
+              total: JSON.stringify(total) })
+    .then(result => {
+      res.json(result);
+      console.log(`Result----${result}`)
+    })
+    .catch(error => {
+      console.log("Error: ", error);
+      return Promise.resolve();
+    });
+});
+
   return router;
 };
+
