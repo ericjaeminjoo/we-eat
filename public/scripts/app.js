@@ -179,13 +179,16 @@ $(document).ready(function() {
     console.log('Cart: ', cart);
     obj = {
       cart: cart,
-      subTotal: $("#subtotal-amount").attr('textContent'),
+      subTotal: $("#subtotal-amount").html(),
       serviceFee: 2.99,
-      total: $("#total-amount").val()
+      total: $("#total-amount").html()
     };
     order.push(obj);
     //`}
-    console.log("Order: ", order);
+    console.log(obj);
+    cart = [];
+    order = [];
+    obj = {};
   });
 
   // Gets the dish object by its id when clicked
