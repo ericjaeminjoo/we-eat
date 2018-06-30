@@ -162,6 +162,19 @@ $(document).ready(function() {
         .parent()
         .parent()
         .remove();
+      // Updates cart button icon to show total number of items in cart currently when items are deleted from cart
+      let itemsInCart = 0;
+      cart.forEach(item => {
+        itemsInCart += item.qty;
+      });
+      $("#cart-btn").empty();
+      if (itemsInCart === 0) {
+        $("#cart-btn").append(`<i class="fal fa-shopping-cart"></i> Cart`);
+      } else {
+        $("#cart-btn").append(
+          `<i class="fal fa-shopping-cart"></i> Cart (${itemsInCart})`
+        );
+      }
     });
 
     // Removes 'empty cart' alert on modal
@@ -311,7 +324,16 @@ $(document).ready(function() {
           lineTotal: lineTotal.toFixed(2)
         };
         cart.push(obj);
-        console.log("Cart: ", cart);
+
+        // Updates cart button icon to show total number of items in cart currently
+        let itemsInCart = 0;
+        cart.forEach(item => {
+          itemsInCart += item.qty;
+        });
+        $("#cart-btn").empty();
+        $("#cart-btn").append(
+          `<i class="fal fa-shopping-cart"></i> Cart (${itemsInCart})`
+        );
       })
       .catch(err => {
         console.log(err);
