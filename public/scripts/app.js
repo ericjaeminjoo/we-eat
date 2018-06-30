@@ -168,51 +168,49 @@ $(document).ready(function() {
     $(".alert-danger").remove();
   };
 
-  // Places the order from the cart
-  $(".modal-footer").on("click", "#checkout-btn", function(event) {
-    // $.ajax({
-    //   method: "GET",
-    //   url: `/order`
-    // })
-    //   .done(results => {
-    //     const lineTotal = $("#quantity-value").data("value") * parseFloat(results[0].price);
-    //     obj = {
-    //       cart: cart,
-    //       subTotal: subTotal.toFixed(2),
-    //       total: total.toFixed(2)
-    //     }
-    //     order.push(obj)
-    //     console.log(order)
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //   });
+// Places the order from the cart
+$(".modal-footer").on("click", "#checkout-btn", function(event) {
+  if ($(".phone-number").val() == "") {
+    $(".phone-number").addClass("is-invalid");
+    $(".invalid-feedback").empty();
+    $(".phone-number-container").append(() => {
+      return `
+      <div class="invalid-feedback">
+        A telephone number is required, please enter your telephone number.
+      </div>
+      `
+    });
+  }
+  if (cart.length === 0) {
+    $(".alert-danger").remove();
+    $(".modal-footer").prepend(() => {
+      return `
+      <div class="alert alert-danger" role="alert">
+        Cannot process empty order, please add items to your cart.
+      </div>
+      `
+    });
+  }
+  else {
+    $(".phone-number").removeClass("is-invalid");
+    $(".invalid-feedback").remove();
+    console.log("Cart: ", cart);
 
-    if ($(".phone-number").val() == "") {
-      $(".phone-number").addClass("is-invalid");
-      $(".invalid-feedback").empty();
-      $(".phone-number-container").append(() => {
-        return `
-        <div class="invalid-feedback">
-          A telephone number is required, please enter your telephone number.
-        </div>
-        `
-      });
-    }
-    if (cart.length === 0) {
-      $(".alert-danger").remove();
-      $(".modal-footer").prepend(() => {
-        return `
-        <div class="alert alert-danger" role="alert">
-          Cannot process empty order, please add items to your cart.
-        </div>
-        `
-      });
-    }
-    else {
-      $(".phone-number").removeClass("is-invalid");
-      $(".invalid-feedback").remove();
-      console.log("Cart: ", cart);
+  let obj;
+  obj = {
+    cart: cart,
+    subTotal: $("#subtotal-amount").html(),
+    serviceFee: 2.99,
+    total: $("#total-amount").html(),
+    telephone: $(".phone-number").val()
+  };
+
+  $.ajax({
+    method: "POST",
+    url: `/order`,
+    data: obj
+  })
+    .done(results => {
       obj = {
         cart: cart,
         subTotal: $("#subtotal-amount").html(),
@@ -220,18 +218,21 @@ $(document).ready(function() {
         total: $("#total-amount").html(),
         telephone: $(".phone-number").val()
       };
-      order.push(obj);
-      //`}
-      console.log(obj);
+      order.push(obj)
+      console.log(order)
+    })
+    .catch(err => {
+      console.log(err);
+    });
 
-      // After menu items have been ordered, everything is reset
-      cart = [];
-      order = [];
-      obj = {};
-      $(".phone-number").val("");
-      $('#checkout-modal').modal('hide');
-    }
-  });
+    // After menu items have been ordered, everything is reset
+    cart = [];
+    order = [];
+    obj = {};
+    $(".phone-number").val("");
+    $('#checkout-modal').modal('hide');
+  }
+});
 
   // Gets the dish object by its id when clicked
   $("#menu-container").on("click", ".food-item", function(event) {

@@ -61,5 +61,26 @@ module.exports = knex => {
       });
   });
 
+  // Puts the cart in the db
+  router.post("/order", (req, res) => {
+  
+   
+    knex.insert({phone: req.body.telephone, service_fee: req.body.serviceFee, sub_total: req.body.subTotal, total: req.body.total}).returning('id').into('orders')
+      .then(results=>{
+        var arr = []
+        console.log(results)
+        for(let element of req.body.cart){
+          arr.push({qty: element.qty, special_inst: element.special_inst, dish_id: element.id,order_id: results[0] })
+        }
+        knex.insert(arr).into('dish_order').then(results_two => {
+          res.redirect('/')
+        })
+      })
+      .catch(error => {
+        console.log("Error: ", error);
+        return Promise.resolve();
+      })
+  });
+
   return router;
 };
