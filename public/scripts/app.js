@@ -134,7 +134,7 @@ $(document).ready(function() {
     $("#total-amount").text(total.toFixed(2));
 
     // Places the order from the cart
-    $(".modal-footer").on("click", ".btn-primary", function(event) {
+    $(".modal-footer").on("click", "#checkout-btn", function(event) {
       // $.ajax({
       //   method: "GET",
       //   url: `/order`
@@ -152,15 +152,10 @@ $(document).ready(function() {
       //   .catch(err => {
       //     console.log(err);
       //   });
-        obj = {
-          cart: cart,
-          subTotal: subTotal.toFixed(2),
-          serviceFee: 2.99,
-          total: total.toFixed(2)
-        };
-        order.push(obj);
-    // `}
-      console.log('Order: ', order);
+      obj = { cart: cart, subTotal: subTotal.toFixed(2), serviceFee: 2.99, total: total.toFixed(2) };
+      order.push(obj);
+      // `}
+      console.log("Order: ", order);
     });
   };
 
