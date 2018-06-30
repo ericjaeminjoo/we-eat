@@ -131,11 +131,7 @@ $(document).ready(function() {
       $("#cart-items").append(createCartItems(item));
     });
 
-    if (cartArr.length === 0) {
-      total = 0;
-    } else {
-      total = subTotal * 1.15 + serviceFee;
-    }
+    total = subTotal * 1.15 + serviceFee;
 
     $("#subtotal-amount").text(subTotal.toFixed(2));
     $("#total-amount").text(total.toFixed(2));
@@ -149,11 +145,7 @@ $(document).ready(function() {
         if (item.id == removedItemID) {
           cart.splice(cart.indexOf(item), 1);
           subTotal -= item.lineTotal;
-          if (cart.length === 0) {
-            total = 0;
-          } else {
-            total = subTotal * 1.15 + serviceFee;
-          }
+          total = subTotal * 1.15 + serviceFee;
           $("#subtotal-amount").text(subTotal.toFixed(2));
           $("#total-amount").text(total.toFixed(2));
         }
@@ -184,19 +176,29 @@ $(document).ready(function() {
     //   .catch(err => {
     //     console.log(err);
     //   });
-    console.log("Cart: ", cart);
+
+    console.log('Cart: ', cart);
     obj = {
       cart: cart,
-      subTotal: $("#subtotal-amount").html(),
+      subTotal: $("#subtotal-amount").attr('textContent'),
       serviceFee: 2.99,
-      total: $("#total-amount").html()
+      total: $("#total-amount").val()
     };
     order.push(obj);
     //`}
-    console.log(obj);
-    cart = [];
-    order = [];
-    obj = {};
+    console.log("Order: ", order);
+
+    for(let orderElement of order) {  // passing the object Order as an event
+    $.ajax({
+      method: "POST",
+      url: `/order`,
+      data: $(this).serialize() // cart items from the client selection
+      // url: `/order/${dishId}`
+    })
+      .done(results => {
+      console.log(`data----: ${data}`)
+      })
+    }
   });
 
   // Gets the dish object by its id when clicked
@@ -303,25 +305,5 @@ $(document).ready(function() {
     $("html,body").animate({ scrollTop: $(this.hash).offset().top - 80 }, 700);
   });
 
-
-  //Checkout the order
-  // $(".modal-footer mx-auto").on("click", "#checkout-btn", function(event) {
-  //   // const dishId = $("#dish").data("origin");
-  //   $.ajax({
-  //     method: "POST",
-  //     url: `/order`,
-  //     body: ,
-  //     // url: `/order/${dishId}`
-  //   })
-  //     .done(results => {
-
-  //       }
-  //       cart.push(obj);
-  //       console.log('Cart: ', cart);
-  //     })
-  //     .catch(err => {
-  //       console.log(err);
-  //     });
-  // });
 
 });
