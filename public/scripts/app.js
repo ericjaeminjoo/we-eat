@@ -187,7 +187,6 @@ $(document).ready(function() {
     //   .catch(err => {
     //     console.log(err);
     //   });
-<<<<<<< HEAD
     console.log("Cart: ", cart);
     obj = {
       cart: cart,
@@ -214,7 +213,6 @@ $(document).ready(function() {
         })
       };
 
-=======
 
     if ($(".phone-number").val() == "") {
       $(".phone-number").addClass("is-invalid");
@@ -259,7 +257,6 @@ $(document).ready(function() {
       $(".phone-number").val("");
       $('#checkout-modal').modal('hide');
     }
->>>>>>> master
   });
 
   // Gets the dish object by its id when clicked
