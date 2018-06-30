@@ -19,6 +19,7 @@ $(document).ready(function() {
           <p>${item.description}</p>
         </div>
         <div class="item-price pt-2">
+          $${item.lineTotal}
           <i class="fa fa-plus-square fa-lg pl-2"></i>
         </div>
       </div>
@@ -75,6 +76,12 @@ $(document).ready(function() {
     `;
   }
 
+  // Cart array to hold all menu items user wants
+  let cart = [];
+
+  // Cart array to hold all menu items user wants
+  let order = [];
+
   // Object for Food Category (/url and #id)
   const foodCategoryObj = {
     "/appetizers": "#coldapp",
@@ -114,29 +121,17 @@ $(document).ready(function() {
 
   // Renders menu items for cart modal into index.html
   const renderCartItems = cartArr => {
-    let lineTotal,
-        subtotal = 0,
+    let subTotal = 0,
         serviceFee = 2.99,
         total = 0;
-
+    let obj = {};
     cartArr.forEach(item => {
-      const obj = {
-        id: item.id,
-        name: item.name,
-        description: item.description,
-        price: item.price,
-        image_url: item.image_url,
-        qty: $("#quantity-value").data("value"),
-      }
-      console.log(obj);
-      lineTotal = parseFloat((obj.qty * obj.price));//parseFloat(item.price);
-      subtotal += lineTotal;//parseFloat(item.price);
-      $("#cart-items").append(createCartItems(obj));
+      subTotal += parseFloat(item.lineTotal);
+      $("#cart-items").append(createCartItems(item));
     });
-    total = (parseFloat(subtotal) * 1.15) + serviceFee;
-    $("#subtotal-amount").text(subtotal.toFixed(2));
+    total = (subTotal * 1.15) + serviceFee;
+    $("#subtotal-amount").text(subTotal.toFixed(2));
     $("#total-amount").text(total.toFixed(2));
-    $(".item-price").text(`$${lineTotal.toFixed(2)}`);
   };
 
   // Gets the dish object by its id when clicked
@@ -183,8 +178,6 @@ $(document).ready(function() {
     $("#quantity-value").data("value", quantity);
   });
 
-  // Cart array to hold all menu items user wants
-  let cart = [];
 
   // Gets each items from the cart
   const getItemsFromCart = cartArray => {
@@ -212,16 +205,53 @@ $(document).ready(function() {
       url: `/dish/${dishId}`
     })
       .done(results => {
-        cart.push(results[0]);
-        // if (cart.length === 0) {
-        //   cart.push(results[0]);
-        // } else if (verifyBeforeAddingToCart(dishId, cart)) {
-        //   cart.push(results[0]);
-        // }
+        const lineTotal = $("#quantity-value").data("value") * parseFloat(results[0].price);
+        const obj = {
+          id: results[0].id,
+          name: results[0].name,
+          description: results[0].description,
+          price: results[0].price,
+          image_url: results[0].image_url,
+          qty: $("#quantity-value").data("value"),
+          lineTotal: lineTotal.toFixed(2)
+        }
+        cart.push(obj);
+        console.log(cart);
       })
       .catch(err => {
         console.log(err);
       });
+  });
+
+  // Places the order from the cart
+  $(".modal-footer").on("click", ".btn-primary", function(event) {
+    // $.ajax({
+    //   method: "GET",
+    //   url: `/order`
+    // })
+    //   .done(results => {
+    //     const lineTotal = $("#quantity-value").data("value") * parseFloat(results[0].price);
+    //     obj = {
+    //       cart: cart,
+    //       subTotal: subTotal.toFixed(2),
+    //       total: total.toFixed(2)
+    //     }
+    //     order.push(obj)
+    //     console.log(order)
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   });
+    cart.forEach(item => {
+      obj = {
+        cart: cart,
+        subTotal: item.subTotal,
+        total: item.total
+      };
+      order.push(obj);
+    });
+  // `}
+    console.log(order)
   });
 
   // On cart button click, render cart items dynamically
