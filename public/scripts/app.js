@@ -132,6 +132,36 @@ $(document).ready(function() {
     total = (subTotal * 1.15) + serviceFee;
     $("#subtotal-amount").text(subTotal.toFixed(2));
     $("#total-amount").text(total.toFixed(2));
+
+    // Places the order from the cart
+    $(".modal-footer").on("click", ".btn-primary", function(event) {
+      // $.ajax({
+      //   method: "GET",
+      //   url: `/order`
+      // })
+      //   .done(results => {
+      //     const lineTotal = $("#quantity-value").data("value") * parseFloat(results[0].price);
+      //     obj = {
+      //       cart: cart,
+      //       subTotal: subTotal.toFixed(2),
+      //       total: total.toFixed(2)
+      //     }
+      //     order.push(obj)
+      //     console.log(order)
+      //   })
+      //   .catch(err => {
+      //     console.log(err);
+      //   });
+        obj = {
+          cart: cart,
+          subTotal: subTotal.toFixed(2),
+          serviceFee: 2.99,
+          total: total.toFixed(2)
+        };
+        order.push(obj);
+    // `}
+      console.log('Order: ', order);
+    });
   };
 
   // Gets the dish object by its id when clicked
@@ -178,15 +208,7 @@ $(document).ready(function() {
     $("#quantity-value").data("value", quantity);
   });
 
-
-  // Gets each items from the cart
-  const getItemsFromCart = cartArray => {
-    for (let item of cartArray) {
-      return item;
-    }
-  };
-
-  // Verifies if an item exists in the cart
+  // *** NOT USED FOR NOW *** Verifies if an item exists in the cart
   const verifyBeforeAddingToCart = (dishId, cartArray) => {
     for (let item of cartArray) {
       if (item.id === dishId) {
@@ -216,42 +238,11 @@ $(document).ready(function() {
           lineTotal: lineTotal.toFixed(2)
         }
         cart.push(obj);
-        console.log(cart);
+        console.log('Cart: ', cart);
       })
       .catch(err => {
         console.log(err);
       });
-  });
-
-  // Places the order from the cart
-  $(".modal-footer").on("click", ".btn-primary", function(event) {
-    // $.ajax({
-    //   method: "GET",
-    //   url: `/order`
-    // })
-    //   .done(results => {
-    //     const lineTotal = $("#quantity-value").data("value") * parseFloat(results[0].price);
-    //     obj = {
-    //       cart: cart,
-    //       subTotal: subTotal.toFixed(2),
-    //       total: total.toFixed(2)
-    //     }
-    //     order.push(obj)
-    //     console.log(order)
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //   });
-    cart.forEach(item => {
-      obj = {
-        cart: cart,
-        subTotal: item.subTotal,
-        total: item.total
-      };
-      order.push(obj);
-    });
-  // `}
-    console.log(order)
   });
 
   // On cart button click, render cart items dynamically
