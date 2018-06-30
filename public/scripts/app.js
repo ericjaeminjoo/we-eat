@@ -19,7 +19,7 @@ $(document).ready(function() {
           <p>${item.description}</p>
         </div>
         <div class="item-price pt-2">
-          $${item.price}
+          $${item.lineTotal}
           <i class="fa fa-plus-square fa-lg pl-2"></i>
         </div>
       </div>
@@ -76,6 +76,12 @@ $(document).ready(function() {
     `;
   }
 
+  // Cart array to hold all menu items user wants
+  let cart = [];
+
+  // Cart array to hold all menu items user wants
+  let order = [];
+
   // Object for Food Category (/url and #id)
   const foodCategoryObj = {
     "/appetizers": "#coldapp",
@@ -115,18 +121,43 @@ $(document).ready(function() {
 
   // Renders menu items for cart modal into index.html
   const renderCartItems = cartArr => {
-    let subtotal = 0,
-      serviceFee = 2.99,
-      total = 0;
-
+    let subTotal = 0,
+        serviceFee = 2.99,
+        total = 0;
+    let obj = {};
     cartArr.forEach(item => {
-      subtotal += parseFloat(item.price);
+      subTotal += parseFloat(item.lineTotal);
       $("#cart-items").append(createCartItems(item));
     });
-
-    total = (parseFloat(subtotal) * 1.15) + serviceFee;
-    $("#subtotal-amount").text(subtotal.toFixed(2));
+    total = (subTotal * 1.15) + serviceFee;
+    $("#subtotal-amount").text(subTotal.toFixed(2));
     $("#total-amount").text(total.toFixed(2));
+
+    // Places the order from the cart
+    $(".modal-footer").on("click", "#checkout-btn", function(event) {
+      // $.ajax({
+      //   method: "GET",
+      //   url: `/order`
+      // })
+      //   .done(results => {
+      //     const lineTotal = $("#quantity-value").data("value") * parseFloat(results[0].price);
+      //     obj = {
+      //       cart: cart,
+      //       subTotal: subTotal.toFixed(2),
+      //       total: total.toFixed(2)
+      //     }
+      //     order.push(obj)
+      //     console.log(order)
+      //   })
+      //   .catch(err => {
+      //     console.log(err);
+      //   });
+      obj = { cart: cart, subTotal: subTotal.toFixed(2), serviceFee: 2.99, total: total.toFixed(2) };
+      order.push(obj);
+      // `}
+      console.log("Order: ", order);
+      cart = [];
+    });
   };
 
   // Gets the dish object by its id when clicked
@@ -173,17 +204,7 @@ $(document).ready(function() {
     $("#quantity-value").data("value", quantity);
   });
 
-  // Cart array to hold all menu items user wants
-  let cart = [];
-
-  // Gets each items in the cart
-  const getItemsInCart = cartArray => {
-    for (let item of cartArray) {
-      return item;
-    }
-  };
-
-  // Verifies if an item exists in the cart
+  // *** NOT USED FOR NOW *** Verifies if an item exists in the cart
   const verifyBeforeAddingToCart = (dishId, cartArray) => {
     for (let item of cartArray) {
       if (item.id === dishId) {
@@ -202,11 +223,18 @@ $(document).ready(function() {
       url: `/dish/${dishId}`
     })
       .done(results => {
-        if (cart.length === 0) {
-          cart.push(results[0]);
-        } else if (verifyBeforeAddingToCart(dishId, cart)) {
-          cart.push(results[0]);
+        const lineTotal = $("#quantity-value").data("value") * parseFloat(results[0].price);
+        const obj = {
+          id: results[0].id,
+          name: results[0].name,
+          description: results[0].description,
+          price: results[0].price,
+          image_url: results[0].image_url,
+          qty: $("#quantity-value").data("value"),
+          lineTotal: lineTotal.toFixed(2)
         }
+        cart.push(obj);
+        console.log('Cart: ', cart);
       })
       .catch(err => {
         console.log(err);
