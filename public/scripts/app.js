@@ -153,6 +153,16 @@ $(document).ready(function() {
           }
         });
       }
+      // Updates cart button icon to show total number of items in cart currently
+      let itemsInCart = 0;
+      cart.forEach(item => {
+        itemsInCart += item.qty;
+      });
+      $("#cart-btn").empty();
+      $("#cart-btn").append(
+        `<i class="fal fa-shopping-cart"></i> Cart (${itemsInCart})`
+      );
+
       $(".item-name").popover("hide");
       $("#cart-items").empty();
       renderCartItems(cart);
@@ -270,6 +280,7 @@ $(document).ready(function() {
       $("#cart-btn").empty();
       $("#cart-btn").append(`<i class="fal fa-shopping-cart"></i> Cart`);
       $("#checkout-modal").modal("hide");
+      $("#post-order-message-modal").modal('show');
     }
   });
 
