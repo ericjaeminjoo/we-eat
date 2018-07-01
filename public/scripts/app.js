@@ -144,13 +144,16 @@ $(document).ready(function() {
 
     // Change quantity of selected item then re-render cart item modal to re-calculate prices
     $(document).on("click", ".quantity-change-btn", function(event) {
-      cart.forEach(item => {
-        if (item.id == $(this).parent().attr("id")) {
-          item.qty = Number($(".quantity-value").data("value"));
-          item.lineTotal = (Number($(".quantity-value").data("value")) * parseFloat(item.price)).toFixed(2);
-          $(".item-name").popover("hide");
-        }
-      });
+      const quantityValue = Number($(".quantity-value").data("value"));
+      if (!(quantityValue <= 0)) {
+        cart.forEach(item => {
+          if (item.id == $(this).parent().attr("id")) {
+            item.qty = quantityValue;
+            item.lineTotal = (quantityValue * parseFloat(item.price)).toFixed(2);
+          }
+        });
+      }
+      $(".item-name").popover("hide");
       $("#cart-items").empty();
       renderCartItems(cart);
     });
@@ -287,11 +290,12 @@ $(document).ready(function() {
   // Increases qty of single dish on modal
   $(document).on("click", ".increase-quantity", function(event) {
     let quantity = Number($(".quantity-value").data("value"));
-    quantity++;
 
     if (quantity >= 0) {
       $(".decrease-quantity").removeAttr("disabled");
     }
+
+    quantity++;
 
     $(this)
       .siblings("input")
@@ -302,10 +306,11 @@ $(document).ready(function() {
   // Decreases qty of single dish on modal
   $(document).on("click", ".decrease-quantity", function(event) {
     let quantity = Number($(".quantity-value").data("value"));
-    quantity--;
 
     if (quantity <= 0) {
       $(".decrease-quantity").attr("disabled", "disabled");
+    } else {
+      quantity--;
     }
 
     $(this)
@@ -367,11 +372,11 @@ $(document).ready(function() {
     renderCartItems(cart);
   });
 
-  // Enforces quantity value to be above 0 and sets the data value to the user input value
+  // Enforces quantity value to be greater than or equal to 1 and sets the data value to the user input value
   $(document).on("change keyup", ".quantity-value", function(event) {
-    if ($(".quantity-value").data("value") < 0) {
-      $(".quantity-value").data("value", "0");
-      $(this).val(0);
+    if ($(".quantity-value").data("value") <= 0) {
+      $(".quantity-value").data("value", "1");
+      $(this).val(1);
     } else {
       $(".quantity-value").data("value", $(this).val());
     }
