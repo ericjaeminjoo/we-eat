@@ -270,6 +270,7 @@ $(document).ready(function() {
       $("#cart-btn").empty();
       $("#cart-btn").append(`<i class="fal fa-shopping-cart"></i> Cart`);
       $("#checkout-modal").modal("hide");
+      $("#post-order-message-modal").modal('show');
     }
   });
 
