@@ -13,7 +13,7 @@ $(document).ready(function() {
   // Creates a DOM element for cart items
   function createCartItems(item) {
     return `
-      <div class="row d-flex justify-content-between" id="${item.id}">
+      <div class="row d-flex justify-content-between cart-item-container" id="${item.id}" data-toggle="modal" data-target="#menu-item-modal">
         <div class="item-name">
           ${item.qty} x
           ${item.name}
@@ -180,6 +180,24 @@ $(document).ready(function() {
     // Removes 'empty cart' alert on modal
     $(".alert-danger").remove();
   };
+
+  // FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:FIXME:
+  // Modify quantity of cart item
+  $(".modal-body").on("click", ".cart-item-container", function (event) {
+    $("#checkout-modal").modal("hide");
+
+
+    $.ajax({
+      method: "GET",
+      url: `/dish/${this.id}`
+    })
+      .done(results => {
+        renderSingleDishModal(results);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  });
 
   // Places the order from the cart
   $(".modal-footer").on("click", "#checkout-btn", function(event) {
