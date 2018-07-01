@@ -14,7 +14,18 @@ $(document).ready(function() {
   function createCartItems(item) {
     return `
       <div class="row d-flex justify-content-between" id="${item.id}">
-        <div class="item-name">
+        <div class="item-name" data-toggle="popover" data-placement="left" data-html="true" title="Change quantity below:" data-content='
+        <div id="${item.id}">
+          <button class="decrease-quantity">
+            <i class="fal fa-minus"></i>
+          </button>
+          <input type="text" class="quantity-value col-3 text-center" value="${item.qty}" data-value="${item.qty}"></input>
+          <button class="increase-quantity">
+            <i class="fal fa-plus"></i>
+          </button>
+          <button class="quantity-change-btn">Save changes</button>
+        </div>
+        '>
           ${item.qty} x
           ${item.name}
           <p>${item.description}</p>
@@ -62,11 +73,11 @@ $(document).ready(function() {
           </div>
           <div class="modal-footer d-flex justify-content-between">
             <div>
-              <button id="decrease-quantity">
+              <button class="decrease-quantity">
                 <i class="fal fa-minus"></i>
               </button>
-              <input type="text" id="quantity-value" value="1" data-value="1" class="text-center"></input>
-              <button id="increase-quantity">
+              <input type="text" class="quantity-value text-center" value="1" data-value="1"></input>
+              <button class="increase-quantity">
                 <i class="fal fa-plus"></i>
               </button>
             </div>
@@ -126,6 +137,27 @@ $(document).ready(function() {
     cartArr.forEach(item => {
       subTotal += parseFloat(item.lineTotal);
       $("#cart-items").append(createCartItems(item));
+    });
+
+    // Enables popover to edit cart item quantity
+    $('[data-toggle="popover"]').popover();
+
+    // Change quantity of selected item then re-render cart item modal to re-calculate prices
+    $(document).on("click", ".quantity-change-btn", function(event) {
+      cart.forEach(item => {
+        if (item.id == $(this).parent().attr("id")) {
+          item.qty = Number($(".quantity-value").data("value"));
+          item.lineTotal = (Number($(".quantity-value").data("value")) * parseFloat(item.price)).toFixed(2);
+          $(".item-name").popover("hide");
+        }
+      });
+      $("#cart-items").empty();
+      renderCartItems(cart);
+    });
+
+    // Ensures that only one quantity popover is shown at once
+    $(document).on("click", ".item-name", function(event) {
+      $(".item-name").not(this).popover('hide');
     });
 
     if (cartArr.length === 0) {
@@ -253,33 +285,33 @@ $(document).ready(function() {
   });
 
   // Increases qty of single dish on modal
-  $(".modal-dialog").on("click", "#increase-quantity", function(event) {
-    let quantity = Number($("#quantity-value").data("value"));
+  $(document).on("click", ".increase-quantity", function(event) {
+    let quantity = Number($(".quantity-value").data("value"));
     quantity++;
 
     if (quantity >= 0) {
-      $("#decrease-quantity").removeAttr("disabled");
+      $(".decrease-quantity").removeAttr("disabled");
     }
 
     $(this)
       .siblings("input")
       .val(quantity);
-    $("#quantity-value").data("value", quantity);
+    $(".quantity-value").data("value", quantity);
   });
 
   // Decreases qty of single dish on modal
-  $(".modal-dialog").on("click", "#decrease-quantity", function(event) {
-    let quantity = Number($("#quantity-value").data("value"));
+  $(document).on("click", ".decrease-quantity", function(event) {
+    let quantity = Number($(".quantity-value").data("value"));
     quantity--;
 
     if (quantity <= 0) {
-      $("#decrease-quantity").attr("disabled", "disabled");
+      $(".decrease-quantity").attr("disabled", "disabled");
     }
 
     $(this)
       .siblings("input")
       .val(quantity);
-    $("#quantity-value").data("value", quantity);
+    $(".quantity-value").data("value", quantity);
   });
 
   // *** NOT USED FOR NOW *** Verifies if an item exists in the cart
@@ -302,14 +334,14 @@ $(document).ready(function() {
     })
       .done(results => {
         const lineTotal =
-          $("#quantity-value").data("value") * parseFloat(results[0].price);
+          $(".quantity-value").data("value") * parseFloat(results[0].price);
         const obj = {
           id: results[0].id,
           name: results[0].name,
           description: results[0].description,
           price: results[0].price,
           image_url: results[0].image_url,
-          qty: parseInt($("#quantity-value").data("value")),
+          qty: parseInt($(".quantity-value").data("value")),
           lineTotal: lineTotal.toFixed(2)
         };
         cart.push(obj);
@@ -336,12 +368,12 @@ $(document).ready(function() {
   });
 
   // Enforces quantity value to be above 0 and sets the data value to the user input value
-  $(".modal-dialog").on("change keyup", "#quantity-value", function(event) {
-    if ($("#quantity-value").data("value") < 0) {
-      $("#quantity-value").data("value", "0");
+  $(document).on("change keyup", ".quantity-value", function(event) {
+    if ($(".quantity-value").data("value") < 0) {
+      $(".quantity-value").data("value", "0");
       $(this).val(0);
     } else {
-      $("#quantity-value").data("value", $(this).val());
+      $(".quantity-value").data("value", $(this).val());
     }
   });
 
