@@ -4,3 +4,4 @@ public/styles
 *.sqlite3
 plan
 .DS_Store
+.env2

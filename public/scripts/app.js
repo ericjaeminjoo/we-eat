@@ -350,4 +350,33 @@ $(document).ready(function() {
     event.preventDefault();
     $("html,body").animate({ scrollTop: $(this.hash).offset().top - 80 }, 700);
   });
+
+  
+  function createOrderInProcess(item) {
+    return ;
+  }
+
+  // Renders a single dish into index.html
+  const renderOrderInProcess = orderArr => {
+    for (let orderItem of orderArr) {
+      $("#").empty();
+      $("#").append(createOrderInProcess(orderItem));
+    }
+  };
+
+
+  //Gets the order object when being processed
+  $("#").on("click", ".", function(event) {
+    $.ajax({
+      method: "GET",
+      url: `/orders/process`
+    })
+      .done(results => {
+        renderOrderInProcess(results)
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  });
+
 });
