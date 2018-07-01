@@ -80,9 +80,6 @@ $(document).ready(function() {
   // Cart array to hold all menu items user wants
   let cart = [];
 
-  // Cart array to hold all menu items user wants
-  let order = [];
-
   // Object for Food Category (/url and #id)
   const foodCategoryObj = {
     "/appetizers": "#coldapp",
@@ -170,24 +167,6 @@ $(document).ready(function() {
 
   // Places the order from the cart
   $(".modal-footer").on("click", "#checkout-btn", function(event) {
-    // $.ajax({
-    //   method: "GET",
-    //   url: `/order`
-    // })
-    //   .done(results => {
-    //     const lineTotal = $("#quantity-value").data("value") * parseFloat(results[0].price);
-    //     obj = {
-    //       cart: cart,
-    //       subTotal: subTotal.toFixed(2),
-    //       total: total.toFixed(2)
-    //     }
-    //     order.push(obj)
-    //     console.log(order)
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //   });
-
     if ($(".phone-number").val() == "") {
       $(".phone-number").addClass("is-invalid");
       $(".invalid-feedback").empty();
@@ -213,20 +192,28 @@ $(document).ready(function() {
       $(".phone-number").removeClass("is-invalid");
       $(".invalid-feedback").remove();
       console.log("Cart: ", cart);
-      obj = {
+      let obj = {
         cart: cart,
         subTotal: $("#subtotal-amount").html(),
         serviceFee: 2.99,
         total: $("#total-amount").html(),
         telephone: $(".phone-number").val()
       };
-      order.push(obj);
-      //`}
-      console.log(obj);
+
+    $.ajax({
+      method: "POST",
+      url: "/order",
+      data: obj
+    })
+      .done(results => {
+        console.log(results);
+      })
+      .catch(err => {
+        console.log(err);
+      });
 
       // After menu items have been ordered, everything is reset
       cart = [];
-      order = [];
       obj = {};
       $(".phone-number").val("");
       $('#checkout-modal').modal('hide');
@@ -308,7 +295,6 @@ $(document).ready(function() {
           lineTotal: lineTotal.toFixed(2)
         };
         cart.push(obj);
-        console.log("Cart: ", cart);
       })
       .catch(err => {
         console.log(err);
