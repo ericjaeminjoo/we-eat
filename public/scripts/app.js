@@ -384,18 +384,20 @@ $(document).ready(function() {
     }
   });
 
-  //Smooth scrolling with links
+  // Smooth scrolling with links
   $("a[href*=\\#]").on("click", function(event) {
     event.preventDefault();
     $("html,body").animate({ scrollTop: $(this.hash).offset().top - 80 }, 700);
   });
 
-  
+
+  // Create a DOM element for the order in process
   function createOrderInProcess(item) {
+    
     return ;
   }
 
-  // Renders a single dish into index.html
+  // Renders a single order into index.html
   const renderOrderInProcess = orderArr => {
     for (let orderItem of orderArr) {
       $("#").empty();
@@ -404,7 +406,7 @@ $(document).ready(function() {
   };
 
 
-  //Gets the order object when being processed
+  // Gets the order object when being processed
   $("#").on("click", ".", function(event) {
     $.ajax({
       method: "GET",
