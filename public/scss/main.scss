@@ -72,7 +72,7 @@ main {
     display: flex;
     justify-content: space-between;
   }
-  #quantity-value {
+  .quantity-value {
     width: 40px;
   }
   #menu-category-container {
@@ -137,6 +137,6 @@ main {
     font-size: 14px !important;
   }
   .alert {
-    font-size: 13px;   
+    font-size: 13px;
   }
 }
