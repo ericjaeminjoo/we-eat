@@ -338,28 +338,30 @@ $(document).ready(function() {
       url: `/dish/${dishId}`
     })
       .done(results => {
-        const lineTotal =
-          $(".quantity-value").data("value") * parseFloat(results[0].price);
-        const obj = {
-          id: results[0].id,
-          name: results[0].name,
-          description: results[0].description,
-          price: results[0].price,
-          image_url: results[0].image_url,
-          qty: parseInt($(".quantity-value").data("value")),
-          lineTotal: lineTotal.toFixed(2)
-        };
-        cart.push(obj);
+        if ($(".quantity-value").data("value") >= 1) {
+          const lineTotal =
+            $(".quantity-value").data("value") * parseFloat(results[0].price);
+          const obj = {
+            id: results[0].id,
+            name: results[0].name,
+            description: results[0].description,
+            price: results[0].price,
+            image_url: results[0].image_url,
+            qty: parseInt($(".quantity-value").data("value")),
+            lineTotal: lineTotal.toFixed(2)
+          };
+          cart.push(obj);
 
-        // Updates cart button icon to show total number of items in cart currently
-        let itemsInCart = 0;
-        cart.forEach(item => {
-          itemsInCart += item.qty;
-        });
-        $("#cart-btn").empty();
-        $("#cart-btn").append(
-          `<i class="fal fa-shopping-cart"></i> Cart (${itemsInCart})`
-        );
+          // Updates cart button icon to show total number of items in cart currently
+          let itemsInCart = 0;
+          cart.forEach(item => {
+            itemsInCart += item.qty;
+          });
+          $("#cart-btn").empty();
+          $("#cart-btn").append(
+            `<i class="fal fa-shopping-cart"></i> Cart (${itemsInCart})`
+          );
+        }
       })
       .catch(err => {
         console.log(err);
