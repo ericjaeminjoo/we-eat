@@ -21,7 +21,7 @@ $(document).ready(function() {
         </div>
         <div class="item-price pt-2">
           $${item.lineTotal}
-          <button class="fal fa-times fa-lg pl-2 remove-item-btn"></button>
+          <button class="pl-2 remove-item-btn"><i class="fal fa-times"></i></button>
         </div>
       </div>
     `;
@@ -159,6 +159,19 @@ $(document).ready(function() {
         .parent()
         .parent()
         .remove();
+      // Updates cart button icon to show total number of items in cart currently when items are deleted from cart
+      let itemsInCart = 0;
+      cart.forEach(item => {
+        itemsInCart += item.qty;
+      });
+      $("#cart-btn").empty();
+      if (itemsInCart === 0) {
+        $("#cart-btn").append(`<i class="fal fa-shopping-cart"></i> Cart`);
+      } else {
+        $("#cart-btn").append(
+          `<i class="fal fa-shopping-cart"></i> Cart (${itemsInCart})`
+        );
+      }
     });
 
     // Removes 'empty cart' alert on modal
@@ -175,8 +188,12 @@ $(document).ready(function() {
         <div class="invalid-feedback">
           A telephone number is required, please enter your telephone number.
         </div>
-        `
+        `;
       });
+    }
+    if (!($(".phone-number").val() == "")) {
+      $(".phone-number").removeClass("is-invalid");
+      $(".invalid-feedback").remove();
     }
     if (cart.length === 0) {
       $(".alert-danger").remove();
@@ -185,10 +202,9 @@ $(document).ready(function() {
         <div class="alert alert-danger" role="alert">
           Cannot process empty order, please add items to your cart.
         </div>
-        `
+        `;
       });
-    }
-    else {
+    } else if (cart.length !== 0 && !($(".phone-number").val() == "")) {
       $(".phone-number").removeClass("is-invalid");
       $(".invalid-feedback").remove();
       console.log("Cart: ", cart);
@@ -216,7 +232,9 @@ $(document).ready(function() {
       cart = [];
       obj = {};
       $(".phone-number").val("");
-      $('#checkout-modal').modal('hide');
+      $("#cart-btn").empty();
+      $("#cart-btn").append(`<i class="fal fa-shopping-cart"></i> Cart`);
+      $("#checkout-modal").modal("hide");
     }
   });
 
@@ -291,10 +309,20 @@ $(document).ready(function() {
           description: results[0].description,
           price: results[0].price,
           image_url: results[0].image_url,
-          qty: $("#quantity-value").data("value"),
+          qty: parseInt($("#quantity-value").data("value")),
           lineTotal: lineTotal.toFixed(2)
         };
         cart.push(obj);
+
+        // Updates cart button icon to show total number of items in cart currently
+        let itemsInCart = 0;
+        cart.forEach(item => {
+          itemsInCart += item.qty;
+        });
+        $("#cart-btn").empty();
+        $("#cart-btn").append(
+          `<i class="fal fa-shopping-cart"></i> Cart (${itemsInCart})`
+        );
       })
       .catch(err => {
         console.log(err);
