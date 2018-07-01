@@ -21,7 +21,7 @@ $(document).ready(function() {
         </div>
         <div class="item-price pt-2">
           $${item.lineTotal}
-          <button class="fal fa-times fa-lg pl-2 remove-item-btn"></button>
+          <button class="pl-2 remove-item-btn"><i class="fal fa-times"></i></button>
         </div>
       </div>
     `;
@@ -162,55 +162,73 @@ $(document).ready(function() {
         .parent()
         .parent()
         .remove();
+      // Updates cart button icon to show total number of items in cart currently when items are deleted from cart
+      let itemsInCart = 0;
+      cart.forEach(item => {
+        itemsInCart += item.qty;
+      });
+      $("#cart-btn").empty();
+      if (itemsInCart === 0) {
+        $("#cart-btn").append(`<i class="fal fa-shopping-cart"></i> Cart`);
+      } else {
+        $("#cart-btn").append(
+          `<i class="fal fa-shopping-cart"></i> Cart (${itemsInCart})`
+        );
+      }
     });
 
     // Removes 'empty cart' alert on modal
     $(".alert-danger").remove();
   };
 
-// Places the order from the cart
-$(".modal-footer").on("click", "#checkout-btn", function(event) {
-  if ($(".phone-number").val() == "") {
-    $(".phone-number").addClass("is-invalid");
-    $(".invalid-feedback").empty();
-    $(".phone-number-container").append(() => {
-      return `
-      <div class="invalid-feedback">
-        A telephone number is required, please enter your telephone number.
-      </div>
-      `
-    });
-  }
-  if (cart.length === 0) {
-    $(".alert-danger").remove();
-    $(".modal-footer").prepend(() => {
-      return `
-      <div class="alert alert-danger" role="alert">
-        Cannot process empty order, please add items to your cart.
-      </div>
-      `
-    });
-  }
-  else {
-    $(".phone-number").removeClass("is-invalid");
-    $(".invalid-feedback").remove();
-    console.log("Cart: ", cart);
+  // Places the order from the cart
+  $(".modal-footer").on("click", "#checkout-btn", function(event) {
+    // $.ajax({
+    //   method: "GET",
+    //   url: `/order`
+    // })
+    //   .done(results => {
+    //     const lineTotal = $("#quantity-value").data("value") * parseFloat(results[0].price);
+    //     obj = {
+    //       cart: cart,
+    //       subTotal: subTotal.toFixed(2),
+    //       total: total.toFixed(2)
+    //     }
+    //     order.push(obj)
+    //     console.log(order)
+    //   })
+    //   .catch(err => {
+    //     console.log(err);
+    //   });
 
-  let obj;
-  obj = {
-    cart: cart,
-    subTotal: $("#subtotal-amount").html(),
-    serviceFee: 2.99,
-    total: $("#total-amount").html(),
-    telephone: $(".phone-number").val()
-  };
-
-  $.ajax({
-    method: "POST",
-    url: `/order`,
-    data: obj
-  })
-    .done(results => {
+    if ($(".phone-number").val() == "") {
+      $(".phone-number").addClass("is-invalid");
+      $(".invalid-feedback").empty();
+      $(".phone-number-container").append(() => {
+        return `
+        <div class="invalid-feedback">
+          A telephone number is required, please enter your telephone number.
+        </div>
+        `;
+      });
+    }
+    if (!($(".phone-number").val() == "")) {
+      $(".phone-number").removeClass("is-invalid");
+      $(".invalid-feedback").remove();
+    }
+    if (cart.length === 0) {
+      $(".alert-danger").remove();
+      $(".modal-footer").prepend(() => {
+        return `
+        <div class="alert alert-danger" role="alert">
+          Cannot process empty order, please add items to your cart.
+        </div>
+        `;
+      });
+    } else if (cart.length !== 0 && !($(".phone-number").val() == "")) {
+      $(".phone-number").removeClass("is-invalid");
+      $(".invalid-feedback").remove();
+      console.log("Cart: ", cart);
       obj = {
         cart: cart,
         subTotal: $("#subtotal-amount").html(),
@@ -218,21 +236,20 @@ $(".modal-footer").on("click", "#checkout-btn", function(event) {
         total: $("#total-amount").html(),
         telephone: $(".phone-number").val()
       };
-      order.push(obj)
-      console.log(order)
-    })
-    .catch(err => {
-      console.log(err);
-    });
+      order.push(obj);
+      //`}
+      console.log(obj);
 
-    // After menu items have been ordered, everything is reset
-    cart = [];
-    order = [];
-    obj = {};
-    $(".phone-number").val("");
-    $('#checkout-modal').modal('hide');
-  }
-});
+      // After menu items have been ordered, everything is reset
+      cart = [];
+      order = [];
+      obj = {};
+      $(".phone-number").val("");
+      $("#cart-btn").empty();
+      $("#cart-btn").append(`<i class="fal fa-shopping-cart"></i> Cart`);
+      $("#checkout-modal").modal("hide");
+    }
+  });
 
   // Gets the dish object by its id when clicked
   $("#menu-container").on("click", ".food-item", function(event) {
@@ -305,11 +322,20 @@ $(".modal-footer").on("click", "#checkout-btn", function(event) {
           description: results[0].description,
           price: results[0].price,
           image_url: results[0].image_url,
-          qty: $("#quantity-value").data("value"),
+          qty: parseInt($("#quantity-value").data("value")),
           lineTotal: lineTotal.toFixed(2)
         };
         cart.push(obj);
-        console.log("Cart: ", cart);
+
+        // Updates cart button icon to show total number of items in cart currently
+        let itemsInCart = 0;
+        cart.forEach(item => {
+          itemsInCart += item.qty;
+        });
+        $("#cart-btn").empty();
+        $("#cart-btn").append(
+          `<i class="fal fa-shopping-cart"></i> Cart (${itemsInCart})`
+        );
       })
       .catch(err => {
         console.log(err);
