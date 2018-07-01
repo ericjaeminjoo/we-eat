@@ -64,7 +64,8 @@ module.exports = knex => {
   // Saves the order into the db
   router.post("/order", (req, res) => {
     knex("orders")
-      .insert({ sub_total: req.body.subTotal,
+      .insert({ phone: req.body.telephone,
+                sub_total: req.body.subTotal,
                 service_fee: req.body.serviceFee,
                 total: req.body.total,
               }).returning('id')
@@ -74,7 +75,6 @@ module.exports = knex => {
         for(let item of req.body.cart){
           arr.push({  qty: item.qty,
                       line_total: item.lineTotal,
-                      phone: item.telephone,
                       dish_id: item.id,
                       order_id: results[0]
                   })
