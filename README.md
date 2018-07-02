@@ -13,7 +13,7 @@ The project is built as a full stack web app using Node, Express, jQuery, AJAX, 
 1. Install all dependencies using the npm install command.
 2. Run `knex migrate:latest` in your terminal.
 3. Set up fake data by running `knex seed:run` in terminal.
-4. Sign up for a Twilio account and Get an Twilio phone number.
+4. Sign up for a Twilio account and Get a Twilio phone number.
 5. Install `npm twilio` and `npm ngrok` to send and receive sms notifications.
 6. Use the Account Sid and Authentification Token provided by Twilio to setup the api with the server.
 7. Run the server: `npm run local`.
