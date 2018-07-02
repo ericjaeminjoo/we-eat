@@ -92,8 +92,8 @@ module.exports = knex => {
              .create({
                 body: `
                 Order #${order_id}
-                advise client when order
-                is almost ready for pickup.`,
+                Advise client when ready.
+                https://3b60f4c1.ngrok.io/orders.html`,
                 from: '+14387956461 ',
                 to: '+15145125510',
               })
