@@ -5,7 +5,7 @@ $(document).ready(function() {
   function createCartItems(item) {
     return `
       <div class="row d-flex justify-content-between" id="${item.id}">
-        <div class="item-name" data-toggle="popover" data-placement="left" data-html="true" title="Change quantity below:" data-content="
+        <div class="item-name" data-toggle="popover" data-placement="left" data-html="true" title="Change quantity below:" data-content='
         <div id="${item.id}">
           <button class="decrease-quantity">
             <i class="fal fa-minus"></i>
@@ -16,7 +16,7 @@ $(document).ready(function() {
           </button>
           <button class="quantity-change-btn">Save changes</button>
         </div>
-        ">
+        '>
           ${item.qty} x
           ${item.name}
           <p>${item.description}</p>
@@ -29,7 +29,7 @@ $(document).ready(function() {
     `;
   }
 
-  // Creates a DOM element for a single dish
+  // Creates a DOM element for a dish
   function createDish(dish) {
     return `
       <a href="#" id="${
@@ -131,9 +131,10 @@ $(document).ready(function() {
     });
 
     // Enables popover to edit cart item quantity
-    $("[data-toggle="popover"]").popover();
+    $('[data-toggle="popover"]').popover();
 
-    // Change quantity of selected item then re-render cart item modal to re-calculate prices
+    // Change quantity of selected item then re-render
+    // cart item modal to re-calculate prices
     $(document).on("click", ".quantity-change-btn", function(event) {
       const quantityValue = Number($(".quantity-value").data("value"));
       if (!(quantityValue <= 0)) {
@@ -144,7 +145,8 @@ $(document).ready(function() {
           }
         });
       }
-      // Updates cart button icon to show total number of items in cart currently
+      // Updates cart button icon to show total number of
+      // items in cart currently
       let itemsInCart = 0;
       cart.forEach(item => {
         itemsInCart += item.qty;
@@ -196,7 +198,8 @@ $(document).ready(function() {
         .parent()
         .remove();
 
-      // Updates cart button icon to show total number of items in cart currently when items are deleted from cart
+      // Updates cart button icon to show total number of items
+      // in cart currently when items are deleted from cart
       let itemsInCart = 0;
       cart.forEach(item => {
         itemsInCart += item.qty;
