@@ -248,7 +248,6 @@ $(document).ready(function() {
     } else if (cart.length !== 0 && !($(".phone-number").val() == "")) {
       $(".phone-number").removeClass("is-invalid");
       $(".invalid-feedback").remove();
-      console.log("Cart: ", cart);
       let obj = {
         cart: cart,
         subTotal: $("#subtotal-amount").html(),
