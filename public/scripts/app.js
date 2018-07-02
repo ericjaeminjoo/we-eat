@@ -253,8 +253,9 @@ $(document).ready(function() {
         subTotal: $("#subtotal-amount").html(),
         serviceFee: 2.99,
         total: $("#total-amount").html(),
-        telephone: $(".phone-number").val()
+        telephone: `+1${$(".phone-number").val()}`
       };
+      console.log(obj.telephone)
 
     // Sends the order out
     $.ajax({
