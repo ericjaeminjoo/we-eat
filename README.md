@@ -2,7 +2,7 @@
 
 ## About the project
 
-We Eat is an web app where the client can choose any delicious Sukiyaki dishes and then change the quantity as he or she likes! Before checkout, the client has to review his order and enter his phone number to get notified when the order is ready to pickup. When the client checkout, the restaurant get notified by sms, and then reply to the client with a time to pickup.
+We Eat is a web app where the client can choose any delicious Sukiyaki dishes and then change the quantity as he or she likes! Before checkout, the client has to review his order and enter his phone number to get notified when the order is ready to pickup. When the client checkout, the restaurant get notified by sms, and then reply to the client with a time to pickup.
 
 #### Project setup
 
@@ -15,11 +15,11 @@ The project is built as a full stack web app using Node, Express, jQuery, AJAX, 
 3. Set up fake data by running `knex seed:run` in terminal.
 4. Sign up for a Twilio account and Get an Twilio phone number.
 5. Install `npm twilio` and `npm ngrok` to send and receive sms notifications.
-6. Use the Account Sid and Authentification Token provided by Twilio to setup the api with the server
+6. Use the Account Sid and Authentification Token provided by Twilio to setup the api with the server.
 7. Run the server: `npm run local`.
 8. Visit `http://localhost:8080/`.
 
-The restaurant can see the ongoing orders at `http://localhost:8080/orders.html` and then click the ready button to notify the client.
+The restaurant can see the ongoing orders by going to `http://localhost:8080/orders.html` and then click the ready button to notify the client.
 
 ## Dependencies
 
@@ -41,11 +41,26 @@ The restaurant can see the ongoing orders at `http://localhost:8080/orders.html`
 
 ## App in action
 
+#### Main page - Menu
 !["screenshot-main-page-menu.png"](https://github.com/JJMin/we-eat/blob/feature/impl-api/docs/screenshot-main-page-menu.png?raw=true)
+
+#### Main page - Add dish items to cart
 !["screenshot-main-page-menu-add-to-cart.png"](https://github.com/JJMin/we-eat/blob/feature/impl-api/docs/screenshot-main-page-menu-add-to-cart.png?raw=true)
+
+#### Checkout page - Review the cart
 !["screenshot-page-cart-review-checkout.png"](https://github.com/JJMin/we-eat/blob/feature/impl-api/docs/screenshot-page-cart-review-checkout.png?raw=true)
+
+#### Checkout page - Enter phone number
 ![screenshot-page-cart-checkout-phone-number-required.png](https://github.com/JJMin/we-eat/blob/feature/impl-api/docs/screenshot-page-cart-checkout-phone-number-required.png?raw=true)
+
+#### Confirmation page - Checkout complete
 ![screenshot-page-confirmation-order-checkout.png](https://github.com/JJMin/we-eat/blob/feature/impl-api/docs/screenshot-page-confirmation-order-checkout.png?raw=true)
+
+#### Restaurant receive a sms notification - New order
 ![screenshot-sms-restaurant-receive-order.png](https://github.com/JJMin/we-eat/blob/feature/impl-api/docs/screenshot-sms-restaurant-receive-order.png?raw=true)
+
+#### Orders page in process - Listing of orders
 ![screenshot-page-orders-in-process.png](https://github.com/JJMin/we-eat/blob/feature/impl-api/docs/screenshot-sms-restaurant-receive-order.png?raw=true)
+
+#### Client receive a sms notification for an eta - Order ready to pickup 
 ![screenshot-sms-client-pickup-ready.JPG](https://github.com/JJMin/we-eat/blob/feature/impl-api/docs/screenshot-sms-client-pickup-ready.JPG?raw=true)
