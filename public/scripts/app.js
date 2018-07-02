@@ -1,15 +1,6 @@
-// $(() => {
-//   $.ajax({
-//     method: "GET",
-//     url: "/api/users"
-//   }).done((users) => {
-//     for(user of users) {
-//       $("<div>").text(user.name).appendTo($("body"));
-//     }
-//   });;
-// });
 
 $(document).ready(function() {
+
   // Creates a DOM element for cart items
   function createCartItems(item) {
     return `
@@ -88,7 +79,7 @@ $(document).ready(function() {
     `;
   }
 
-  // Cart array to hold all menu items user wants
+  // Shopping cart
   let cart = [];
 
   // Object for Food Category (/url and #id)
@@ -142,7 +133,8 @@ $(document).ready(function() {
     // Enables popover to edit cart item quantity
     $('[data-toggle="popover"]').popover();
 
-    // Change quantity of selected item then re-render cart item modal to re-calculate prices
+    // Change quantity of selected item then re-render
+    // cart item modal to re-calculate prices
     $(document).on("click", ".quantity-change-btn", function(event) {
       const quantityValue = Number($(".quantity-value").data("value"));
       if (!(quantityValue <= 0)) {
@@ -153,7 +145,8 @@ $(document).ready(function() {
           }
         });
       }
-      // Updates cart button icon to show total number of items in cart currently
+      // Updates cart button icon to show total number of
+      // items in cart currently
       let itemsInCart = 0;
       cart.forEach(item => {
         itemsInCart += item.qty;
@@ -170,7 +163,7 @@ $(document).ready(function() {
 
     // Ensures that only one quantity popover is shown at once
     $(document).on("click", ".item-name", function(event) {
-      $(".item-name").not(this).popover('hide');
+      $(".item-name").not(this).popover("hide");
     });
 
     if (cartArr.length === 0) {
@@ -204,7 +197,9 @@ $(document).ready(function() {
         .parent()
         .parent()
         .remove();
-      // Updates cart button icon to show total number of items in cart currently when items are deleted from cart
+
+      // Updates cart button icon to show total number of items
+      // in cart currently when items are deleted from cart
       let itemsInCart = 0;
       cart.forEach(item => {
         itemsInCart += item.qty;
@@ -219,7 +214,7 @@ $(document).ready(function() {
       }
     });
 
-    // Removes 'empty cart' alert on modal
+    // Removes "empty cart" alert on modal
     $(".alert-danger").remove();
   };
 
@@ -261,6 +256,7 @@ $(document).ready(function() {
         telephone: $(".phone-number").val()
       };
 
+    // Sends the order out
     $.ajax({
       method: "POST",
       url: "/order",
@@ -280,7 +276,7 @@ $(document).ready(function() {
       $("#cart-btn").empty();
       $("#cart-btn").append(`<i class="fal fa-shopping-cart"></i> Cart`);
       $("#checkout-modal").modal("hide");
-      $("#post-order-message-modal").modal('show');
+      $("#post-order-message-modal").modal("show");
     }
   });
 
@@ -330,17 +326,6 @@ $(document).ready(function() {
     $(".quantity-value").data("value", quantity);
   });
 
-  // *** NOT USED FOR NOW *** Verifies if an item exists in the cart
-  const verifyBeforeAddingToCart = (dishId, cartArray) => {
-    for (let item of cartArray) {
-      if (item.id === dishId) {
-        return false;
-      } else {
-        return true;
-      }
-    }
-  };
-
   // Adds an item to the cart
   $(".modal-dialog").on("click", "#add-to-cart", function(event) {
     const dishId = $("#dish").data("origin");
@@ -385,7 +370,8 @@ $(document).ready(function() {
     renderCartItems(cart);
   });
 
-  // Enforces quantity value to be greater than or equal to 1 and sets the data value to the user input value
+  // Enforces quantity value to be greater than
+  // or equal to 1 and sets the data value to the user input value
   $(document).on("change keyup", ".quantity-value", function(event) {
     if ($(".quantity-value").data("value") <= 0) {
       $(".quantity-value").data("value", "1");
