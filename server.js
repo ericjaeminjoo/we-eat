@@ -13,6 +13,7 @@ const knexConfig = require("./knexfile");
 const knex = require("knex")(knexConfig[ENV]);
 const morgan = require("morgan");
 const knexLogger = require("knex-logger");
+const MessagingResponse = require('twilio').twiml.MessagingResponse;
 
 // Seperated Routes for each Resource
 // const usersRoutes = require("./routes/users");
@@ -54,6 +55,18 @@ app.use(express.static("public"));
 // app.use("/api/users", usersRoutes(knex));
 app.use("/", dishRoutes(knex));
 
+// Sends an sms when replied on mobile phone
+app.post('/sms', (req, res) => {
+  console.log(req.body.body);
+  const twiml = new MessagingResponse();
+ 
+  twiml.message(`
+    Thank you for ordering.
+    The We-Eat team.`);
+ 
+  res.writeHead(200, {'Content-Type': 'text/xml'});
+  res.end(twiml.toString());
+ });
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);

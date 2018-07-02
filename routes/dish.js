@@ -63,6 +63,7 @@ module.exports = knex => {
 
   // Saves the order into the db
   router.post("/order", (req, res) => {
+    let order_id = 0;
     knex("orders")
       .insert({ phone: req.body.telephone,
                 sub_total: req.body.subTotal,
@@ -78,10 +79,23 @@ module.exports = knex => {
                       dish_id: item.id,
                       order_id: results[0]
                   })
+            order_id = results[0];
         }
       knex("dish_order").insert(arr)
         .then(results_two => {
-          console.log(results_two);
+         console.log(results_two);
+         const accountSid = 'AC7052a5c2235109743ef7b375ee5110c4';
+         const authToken = '7e4230f32a51eba5f7865b62bf4d5a9e';
+         const client = require('twilio')(accountSid, authToken);
+         client.messages
+           .create({
+              body: `
+              Order #${order_id}
+              advise client when order
+              is almost ready for pickup.`,
+              from: '+14387956461 ',
+              to: '+15145125510',
+            })
         })
      })
     .catch(error => {
@@ -89,6 +103,32 @@ module.exports = knex => {
        return Promise.resolve();
     })
  });
+
+  router.get("/orders/process", (req, res) => {
+    knex("orders")
+      .select()
+      .whereNull("time_complete")
+      .then(result => {
+        res.json(result);
+      })
+      .catch(error => {
+        console.log("Error: ", error);
+        return Promise.resolve();
+    }); 
+  });
+
+  router.post("/orders/ready", (req, res) => {
+    const accountSid = 'AC7052a5c2235109743ef7b375ee5110c4';
+    const authToken = '7e4230f32a51eba5f7865b62bf4d5a9e';
+    const client = require('twilio')(accountSid, authToken);
+    client.messages
+        .create({
+          body: `
+          Your order will ready to pick up in 20 mins.`,
+          from: '+14387956461 ',
+          to: '+15142689002',
+        })
+  });
 
   return router;
 };
