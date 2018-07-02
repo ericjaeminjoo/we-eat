@@ -124,7 +124,7 @@ module.exports = knex => {
     client.messages
         .create({
           body: `
-          Your order will ready to pick up in 20 mins.`,
+          Your order will be ready to pick up in 20 mins.`,
           from: '+14387956461 ',
           to: '+15142689002',
         })
