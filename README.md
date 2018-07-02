@@ -2,7 +2,7 @@
 
 ## About the project
 
-We Eat is a web app where the client can choose any delicious Sukiyaki dishes and then change the quantity as he or she likes! Before checkout, the client has to review his order and enter his phone number to get notified when the order is ready to pickup. When the client checkout, the restaurant get notified by sms, and then reply to the client with a time to pickup.
+We Eat is a web app where the client can choose any delicious Sukiyaki dishes and then change the quantity as he or she likes! Before checkout, the client has to review his order and enter his phone number to get notified when the order is ready for pick up. When the client checkouts, the restaurant gets notified by sms, and then reply to the client with a time for pick up.
 
 #### Project setup
 
@@ -56,11 +56,11 @@ The restaurant can see the ongoing orders by going to `http://localhost:8080/ord
 #### Confirmation page - Checkout complete
 ![screenshot-page-confirmation-order-checkout.png](https://github.com/JJMin/we-eat/blob/feature/impl-api/docs/screenshot-page-confirmation-order-checkout.png?raw=true)
 
-#### Restaurant receive a sms notification - New order
+#### Restaurant receives a sms notification - New order
 ![screenshot-sms-restaurant-receive-order.png](https://github.com/JJMin/we-eat/blob/feature/impl-api/docs/screenshot-sms-restaurant-receive-order.png?raw=true)
 
 #### Orders page in process - Listing of orders
-![screenshot-page-orders-in-process.png](https://github.com/JJMin/we-eat/blob/feature/impl-api/docs/screenshot-sms-restaurant-receive-order.png?raw=true)
+![screenshot-page-orders-in-process.png](https://github.com/JJMin/we-eat/blob/feature/impl-api/docs/screenshot-page-orders-in-process.png?raw=true)
 
-#### Client receive a sms notification for an eta - Order ready to pickup 
+#### Client receives a sms notification for an eta - Order ready for pick up 
 ![screenshot-sms-client-pickup-ready.JPG](https://github.com/JJMin/we-eat/blob/feature/impl-api/docs/screenshot-sms-client-pickup-ready.JPG?raw=true)
