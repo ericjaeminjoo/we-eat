@@ -4,10 +4,11 @@ const express = require("express");
 const router = express.Router();
 
 module.exports = knex => {
+
   // Gets the appetizers from db
   router.get("/appetizers", (req, res) => {
     knex("dish")
-      .select("id", "name", "description", "price", "image_url")
+      .select()
       .where({ category: "appetizers" })
       .then(result => {
         res.json(result);
@@ -21,7 +22,7 @@ module.exports = knex => {
   // Gets the soups from db
   router.get("/soups", (req, res) => {
     knex("dish")
-      .select("id", "name", "description", "price", "image_url")
+      .select()
       .where({ category: "soups" })
       .then(result => {
         res.json(result);
@@ -35,7 +36,7 @@ module.exports = knex => {
   // Gets the teriyaki from db
   router.get("/teriyaki", (req, res) => {
     knex("dish")
-      .select("id", "name", "description", "price", "image_url")
+      .select()
       .where({ category: "teriyaki" })
       .then(result => {
         res.json(result);
@@ -50,7 +51,7 @@ module.exports = knex => {
   router.get("/dish/:id", (req, res) => {
     const dish_id = req.params.id;
     knex("dish")
-      .select("id", "name", "description", "price", "image_url")
+      .select()
       .where({id: dish_id})
       .then(result => {
         res.json(result);
@@ -70,7 +71,7 @@ module.exports = knex => {
                 service_fee: req.body.serviceFee,
                 total: req.body.total,
               }).returning('id')
-      .then(results=>{
+      .then(results => {
         var arr = [];
         console.log(results);
         for(let item of req.body.cart){
@@ -84,18 +85,18 @@ module.exports = knex => {
       knex("dish_order").insert(arr)
         .then(results_two => {
          console.log(results_two);
-         const accountSid = 'AC7052a5c2235109743ef7b375ee5110c4';
-         const authToken = '7e4230f32a51eba5f7865b62bf4d5a9e';
-         const client = require('twilio')(accountSid, authToken);
-         client.messages
-           .create({
-              body: `
-              Order #${order_id}
-              advise client when order
-              is almost ready for pickup.`,
-              from: '+14387956461 ',
-              to: '+15145125510',
-            })
+           const accountSid = 'AC7052a5c2235109743ef7b375ee5110c4';
+           const authToken = '7e4230f32a51eba5f7865b62bf4d5a9e';
+           const client = require('twilio')(accountSid, authToken);
+           client.messages
+             .create({
+                body: `
+                Order #${order_id}
+                advise client when order
+                is almost ready for pickup.`,
+                from: '+14387956461 ',
+                to: '+15145125510',
+              })
         })
      })
     .catch(error => {
@@ -114,21 +115,32 @@ module.exports = knex => {
       .catch(error => {
         console.log("Error: ", error);
         return Promise.resolve();
-    }); 
+    });
   });
 
   router.post("/orders/ready", (req, res) => {
-    const accountSid = 'AC7052a5c2235109743ef7b375ee5110c4';
-    const authToken = '7e4230f32a51eba5f7865b62bf4d5a9e';
-    const client = require('twilio')(accountSid, authToken);
-    client.messages
-        .create({
-          body: `
-          Your order will be ready to pick up in 20 mins.`,
-          from: '+14387956461 ',
-          to: '+15142689002',
-        })
+    const date = new Date().toISOString();
+    knex('orders')
+      .update('time_complete', date)
+      .where({id: req.body.id})
+      .then(result => {
+        const accountSid = 'AC7052a5c2235109743ef7b375ee5110c4';
+        const authToken = '7e4230f32a51eba5f7865b62bf4d5a9e';
+        const client = require('twilio')(accountSid, authToken);
+        client.messages
+            .create({
+              body: `
+              Order #${req.body.id}
+              Your order will be ready to pick up in 15 mins.
+              Enjoy your meal!`,
+              from: '+14387956461 ',
+              to: req.body.phone
+            })
+      })
+      .catch(error => {
+        console.log("Error: ", error);
+        return Promise.resolve();
+    });
   });
-
   return router;
 };

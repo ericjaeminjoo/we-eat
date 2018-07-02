@@ -13,14 +13,14 @@ const knexConfig = require("./knexfile");
 const knex = require("knex")(knexConfig[ENV]);
 const morgan = require("morgan");
 const knexLogger = require("knex-logger");
-const MessagingResponse = require('twilio').twiml.MessagingResponse;
+const MessagingResponse = require("twilio").twiml.MessagingResponse;
 
 // Seperated Routes for each Resource
 // const usersRoutes = require("./routes/users");
 const dishRoutes = require("./routes/dish");
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
-// 'dev' = Concise output colored by response status for development use.
+// "dev" = Concise output colored by response status for development use.
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
 app.use(morgan("dev"));
 
@@ -52,19 +52,17 @@ app.use(
 app.use(express.static("public"));
 
 // Mount all resource routes
-// app.use("/api/users", usersRoutes(knex));
 app.use("/", dishRoutes(knex));
 
 // Sends an sms when replied on mobile phone
-app.post('/sms', (req, res) => {
+app.post("/sms", (req, res) => {
   console.log(req.body.body);
   const twiml = new MessagingResponse();
- 
+
   twiml.message(`
-    Thank you for ordering.
-    The We-Eat team.`);
- 
-  res.writeHead(200, {'Content-Type': 'text/xml'});
+    Thank you for your order.`);
+
+  res.writeHead(200, {"Content-Type": "text/xml"});
   res.end(twiml.toString());
  });
 

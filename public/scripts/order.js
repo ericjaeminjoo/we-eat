@@ -1,11 +1,13 @@
 $(document).ready(function() {
 
-// Create a DOM element for the order in process
-function createOrderInProcess(item) {
+  let orderObj = {};
+
+  // Create a DOM element for the order in process
+  const createOrderInProcess = item => {
     return `
     <tr class="order-in-process">
-      <th class="order-id" scope="row">${item.id}</th>
-      <td><button class="btn-send-sms">READY</button></td>
+      <th id="${item.id}" class="in-process" scope="row">${item.id}</th>
+      <td><button id="${item.id}" class="btn-send-sms">READY</button></td>
     </tr>
     `;
   }
@@ -18,38 +20,47 @@ function createOrderInProcess(item) {
   };
 
 
-  // Gets the order object when being processed
-  function getOrders () {
+  // Gets the orders that needs to be completed
+  const getOrders = () => {
     $.ajax({
       method: "GET",
       url: `/orders/process`
     })
     .done(results => {
-    renderOrderInProcess(results)
+      orderObj = results;
+      renderOrderInProcess(results);
     })
     .catch(err => {
-    console.log(err);
+      console.log(err);
     });
   };
 
+  // Loads orders on html
   getOrders();
 
-   // Send sms to client when clicked and then clear out the order
-   $(".table").on("click",".btn-send-sms", function(event) {
-        $.ajax({
-            method: "POST",
-            url: `/orders/ready`
-        })
-        .done(results => {
-        console.log(`helloooo----${results}`)
-        renderOrderInProcess(results)
-        })
-        .catch(err => {
-        console.log(err);
-        });
-        // console.log(`thisss---${this}`)
-        // console.log(`event----${event}`)
-        // console.log(`number--${("#order-table .order-id").text()}`)
+  // Sends sms to client to pickup his order
+  $(".table").on("click",".btn-send-sms", function() {
+      let orderReady = {};
+      for(let item of orderObj){
+        if(this.id == item.id){
+          orderReady = item;
+          $.ajax({
+              method: "POST",
+              url: `/orders/ready`,
+              data: orderReady
+          })
+          .done(results => {
+            console.log(results);
+          })
+          .catch(err => {
+            console.log(err);
+          })
+        }
+      }
+      // Removes row from list
+      $(this)
+        .parent()
+        .parent()
+        .remove();
   });
-
 });
