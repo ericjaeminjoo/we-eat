@@ -4,14 +4,14 @@ $(document).ready(function() {
   // Creates a DOM element for cart items
   function createCartItems(item) {
     return `
-      <div class="row d-flex justify-content-between" id="${item.id}">
+      <div class="row d-flex justify-content-between" id="${item.id}" data-quantity-type="${item.qty}">
         <div class="item-name" data-toggle="popover" data-placement="left" data-html="true" title="Change quantity below:" data-content='
         <div id="${item.id}">
           <button class="decrease-quantity">
             <i class="fal fa-minus"></i>
           </button>
-          <input type="text" class="quantity-value col-3 text-center" value="${item.qty}" data-value="${item.qty}"></input>
-          <button class="increase-quantity">
+          <input type="text" class="cart-quantity-value col-3 text-center" value="${item.qty}" data-value="${item.qty}"></input>
+          <button class="increase-cart-quantity">
             <i class="fal fa-plus"></i>
           </button>
           <button class="quantity-change-btn">Save changes</button>
@@ -145,6 +145,7 @@ $(document).ready(function() {
           }
         });
       }
+
       // Updates cart button icon to show total number of
       // items in cart currently
       let itemsInCart = 0;
@@ -311,6 +312,24 @@ $(document).ready(function() {
     $(".quantity-value").data("value", quantity);
   });
 
+  // Increases qty of single dish on modal
+  $(document).on("click", ".increase-cart-quantity", function (event) {
+    let quantity = Number($("#cart-items #" + $(this).parent().attr("id")).attr("data-quantity-type"));
+
+    if (quantity >= 0) {
+      $(".decrease-quantity").removeAttr("disabled");
+    }
+
+    quantity++;
+
+    $("#cart-items #" + $(this).parent().attr("id")).attr("data-quantity-type", quantity)
+
+    $(this)
+      .siblings("input")
+      .val(quantity);
+    $(".quantity-value").data("value", quantity);
+  });
+
   // Decreases qty of single dish on modal
   $(document).on("click", ".decrease-quantity", function(event) {
     let quantity = Number($(".quantity-value").data("value"));
@@ -325,6 +344,24 @@ $(document).ready(function() {
       .siblings("input")
       .val(quantity);
     $(".quantity-value").data("value", quantity);
+  });
+
+  // Decreases qty of single dish on modal
+  $(document).on("click", ".decrease-quantity", function (event) {
+    let quantity = Number($("#cart-items #" + $(this).parent().attr("id")).attr("data-quantity-type"));
+
+    if (quantity <= 0) {
+      $(".decrease-cart-quantity").attr("disabled", "disabled");
+    } else {
+      quantity--;
+    }
+
+    $("#cart-items #" + $(this).parent().attr("id")).attr("data-quantity-type", quantity)
+
+    $(this)
+      .siblings("input")
+      .val(quantity);
+    $(".cart-quantity-value").data("value", quantity);
   });
 
   // Adds an item to the cart
