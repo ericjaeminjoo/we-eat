@@ -15,7 +15,7 @@ The project is built as a full stack web app using Node, Express, jQuery, AJAX, 
 3. Set up fake data by running `knex seed:run` in terminal.
 4. Sign up for a Twilio account and Get a Twilio phone number.
 5. Install `npm twilio` and `npm ngrok` to send and receive sms notifications.
-6. Use the Account Sid and Authentification Token provided by Twilio to setup the api with the server.
+6. Use the Account Sid and Authentication Token provided by Twilio to setup the api with the server.
 7. Run the server: `npm run local`.
 8. Visit `http://localhost:8080/`.
 
@@ -56,11 +56,11 @@ The restaurant can see the ongoing orders by going to `http://localhost:8080/ord
 #### Confirmation page - Checkout complete
 ![screenshot-page-confirmation-order-checkout.png](https://github.com/JJMin/we-eat/blob/feature/impl-api/docs/screenshot-page-confirmation-order-checkout.png?raw=true)
 
-#### Restaurant receives a sms notification - New order
+#### Restaurant receives an sms notification - New order
 ![screenshot-sms-restaurant-receive-order.png](https://github.com/JJMin/we-eat/blob/feature/impl-api/docs/screenshot-sms-restaurant-receive-order.png?raw=true)
 
 #### Orders page in process - Listing of orders
 ![screenshot-page-orders-in-process.png](https://github.com/JJMin/we-eat/blob/feature/impl-api/docs/screenshot-page-orders-in-process.png?raw=true)
 
-#### Client receives a sms notification for an eta - Order ready for pick up 
+#### Client receives an sms notification for an eta - Order ready for pick up
 ![screenshot-sms-client-pickup-ready.JPG](https://github.com/JJMin/we-eat/blob/feature/impl-api/docs/screenshot-sms-client-pickup-ready.JPG?raw=true)
